@@ -8,7 +8,7 @@ const Logo = () => {
   return (
     <NextLink href='/' passHref>
       <Link style={{ textDecoration: 'none' }}>
-        <Flex fontSize='4xl' fontWeight={500} textAlign='center'>
+        <Flex fontSize='4xl' fontWeight={500}>
           <Icon as={TbPaperBag} />
 
           <Heading as='h1' display={{ base: 'none', sm: 'inline-block' }}>

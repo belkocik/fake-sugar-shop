@@ -24,4 +24,5 @@ export type SugarProductSchema = {
   stock: number;
   onDiscount?: boolean;
   discountValue?: number;
+  quantity?: number;
 };

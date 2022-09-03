@@ -9,11 +9,13 @@ import { SugarProductSchema } from '@/types/sugar-product-schema';
 import hygraph from '@/utils/graphqlRequestClient';
 
 const ProductSlugPage = ({ product }) => {
-  console.log(product.sugars[0]);
-  const { title, price, description, brand, coverImage } = product.sugars[0];
+  // console.log(product.sugars[0]);
+  // const { title, price, description, brand, coverImage } = product.sugars[0];
+  console.log(product);
+  const { title, price, description, brand, coverImage } = product;
 
   return (
-    <PageLayout title='Slug page' description={`${title}`}>
+    <PageLayout title='Slug page' description={`xd`}>
       <Box>{title}</Box>
       <RichText
         content={description.raw}
@@ -63,7 +65,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      product: product,
+      product: product.sugars[0],
     },
   };
 };

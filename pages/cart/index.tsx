@@ -1,23 +1,36 @@
 import PageLayout from '@/components/page-layout';
-
-import useCartStore from 'store/zustand';
-
-import { VStack, Box, Text, Image } from '@chakra-ui/react';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  VStack,
+  Text,
+  Image,
+  Box,
+  Flex,
+  Heading,
+  HStack,
+  Link,
+  Stack,
+  Button,
+} from '@chakra-ui/react';
+import { addToCart, selectId } from 'src/redux/slices/cartSlice';
+import {
+  decrementQuantity,
+  incrementQuantity,
+  removeItem,
+} from 'src/redux/slices/cartSlice';
+import CartComponent from '@/components/cart-item';
 
 const Cart = () => {
-  const ProductsInCart = useCartStore((state) => state.carts);
-  console.log(ProductsInCart);
+  const selectProducts = useSelector(selectId);
+  // console.log(selectIdOfTheProduct);
 
   return (
     <PageLayout title='Koszyk' description='Fake Sugar - koszyk'>
       <VStack>
         <Box maxW='300px'>
-          {ProductsInCart.map((item) => (
-            <Box>
-              <Text>{item.title}</Text>
-              <Image src={item.coverImage} />
-            </Box>
-          ))}
+          {selectProducts.map((item) => {
+            return <CartComponent item={item} />;
+          })}
         </Box>
       </VStack>
     </PageLayout>

@@ -19,8 +19,6 @@
       "@/types/*": ["src/types/*"],
       "@/utils/*": ["src/utils/*"],
       "@/data/*": ["data/*"],
-      "@/providers/*": ["src/providers/*"],
-      "@/internationalization/*": ["internationalization/*"],
       "@/theme": ["src/theme"]
     },
     "incremental": true

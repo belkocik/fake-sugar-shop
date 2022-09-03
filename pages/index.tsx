@@ -3,12 +3,18 @@ import ProductCard from '@/components/product-card';
 import { getSugarProducts } from '@/data/graphqlQueries';
 // import { ProductCardType } from '@/types/product-card-type';
 import { GetServerSideProps } from 'next';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectId } from 'src/redux/slices/cartSlice';
+import { RootState } from 'src/redux/store';
 
-import { Grid, Box } from '@chakra-ui/react';
+import { Grid, Box, Button, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
 const IndexPage = ({ sugarProducts }) => {
   console.log(sugarProducts);
+  // const count = useSelector(selectValue);
+  // const dispatch = useDispatch();
+  let quantity = 1;
 
   return (
     <PageLayout title='Home' description='Fake Sugar - sklep internetowy'>
@@ -20,6 +26,11 @@ const IndexPage = ({ sugarProducts }) => {
         }}
         gap={4}
       >
+        {/* <Box>
+          <Button onClick={() => dispatch(increment())}>+</Button>
+          <Text>{count}</Text>
+          <Button onClick={() => dispatch(decrement())}>-</Button>
+        </Box> */}
         {sugarProducts.map((product) => (
           <Box key={product.slug}>
             <ProductCard
@@ -30,6 +41,7 @@ const IndexPage = ({ sugarProducts }) => {
               id={product.id}
               slug={product.slug}
               stock={product.stock}
+              quantity={product.quantity}
             />
           </Box>
         ))}

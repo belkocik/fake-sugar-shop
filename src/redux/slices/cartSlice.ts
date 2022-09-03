@@ -121,10 +121,10 @@ const cartSlice = createSlice({
       }
     },
     removeItem: (state, action) => {
-      const item = action.payload;
-      const removeItem = state.cart.filter((item) => item.id !== item.id);
+      const itemData = action.payload;
+      const removeItem = state.cart.filter((item) => item.id !== itemData.id);
       state.cart = removeItem;
-      toast.error(`Usunieto ${item.title} z koszyka`);
+      toast.error(`Usunieto ${itemData.title} z koszyka`);
     },
   },
 });
@@ -134,7 +134,7 @@ export const { addToCart, incrementQuantity, decrementQuantity, removeItem } =
   cartSlice.actions;
 
 // selector
-export const selectId = (state: RootState) => state.cart.cart;
+export const selectAllDataFromStore = (state: RootState) => state.cart.cart;
 // quantity selector
 
 // gotta export out created slice

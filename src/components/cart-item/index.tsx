@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Text, Button } from '@chakra-ui/react';
-import { addToCart, selectId } from 'src/redux/slices/cartSlice';
+import { addToCart, selectAllDataFromStore } from 'src/redux/slices/cartSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   decrementQuantity,
@@ -9,7 +9,7 @@ import {
 } from 'src/redux/slices/cartSlice';
 
 const CartComponent = ({ item }) => {
-  const selectProducts = useSelector(selectId);
+  const selectProducts = useSelector(selectAllDataFromStore);
   // console.log(selectIdOfTheProduct);
   const dispatch = useDispatch();
 

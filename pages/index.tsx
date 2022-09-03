@@ -4,7 +4,7 @@ import { getSugarProducts } from '@/data/graphqlQueries';
 // import { ProductCardType } from '@/types/product-card-type';
 import { GetServerSideProps } from 'next';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectId } from 'src/redux/slices/cartSlice';
+import { selectAllDataFromStore } from 'src/redux/slices/cartSlice';
 import { RootState } from 'src/redux/store';
 
 import { Grid, Box, Button, Text } from '@chakra-ui/react';

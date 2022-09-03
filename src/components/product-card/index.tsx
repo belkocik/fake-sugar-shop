@@ -19,7 +19,7 @@ import NextLink from 'next/link';
 // import toast, { Toaster } from 'react-hot-toast';
 import { useSelector, useDispatch } from 'react-redux';
 // import { decrement, increment, selectValue } from 'src/redux/slices/cartSlice';
-import { addToCart, selectId } from 'src/redux/slices/cartSlice';
+import { addToCart, selectAllDataFromStore } from 'src/redux/slices/cartSlice';
 import { RootState } from 'src/redux/store';
 
 export const ProductCard = ({
@@ -36,7 +36,7 @@ export const ProductCard = ({
   // const dispatch = useDispatch();
   // console.log(title);
 
-  const selectIdOfTheProduct = useSelector(selectId);
+  const selectIdOfTheProduct = useSelector(selectAllDataFromStore);
   console.log(selectIdOfTheProduct);
   const dispatch = useDispatch();
   // const handleAddToCart = (id, title) => {

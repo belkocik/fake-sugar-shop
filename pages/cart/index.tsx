@@ -18,7 +18,7 @@ import {
   incrementQuantity,
   removeItem,
 } from 'src/redux/slices/cartSlice';
-import CartComponent from '@/components/cart-item';
+import CartComponent from '@/components/cart/cart-item';
 
 const Cart = () => {
   const selectProducts = useSelector(selectAllDataFromStore);

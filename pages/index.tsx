@@ -14,7 +14,7 @@ const IndexPage = ({ sugarProducts }) => {
   console.log(sugarProducts);
   // const count = useSelector(selectValue);
   // const dispatch = useDispatch();
-  let quantity = 1;
+  // let quantity = 1;
 
   return (
     <PageLayout title='Home' description='Fake Sugar - sklep internetowy'>
@@ -41,7 +41,7 @@ const IndexPage = ({ sugarProducts }) => {
               id={product.id}
               slug={product.slug}
               stock={product.stock}
-              quantity={product.quantity}
+              // quantity={product.quantity}
             />
           </Box>
         ))}

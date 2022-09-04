@@ -2,15 +2,33 @@ import PageLayout from '@/components/page-layout';
 import ProductCard from '@/components/product-card';
 import { getSugarProducts } from '@/data/graphqlQueries';
 // import { ProductCardType } from '@/types/product-card-type';
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectAllDataFromStore } from 'src/redux/slices/cartSlice';
 import { RootState } from 'src/redux/store';
+import { SugarProductSchema } from '@/types/sugar-product-schema';
 
 import { Grid, Box, Button, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
-const IndexPage = ({ sugarProducts }) => {
+// interface SugarProducts {
+//   title: string;
+//   brand?: string;
+//   price?: number;
+//   coverImage?: { url: string };
+//   id: string;
+//   slug?: string;
+//   stock: number;
+//   onDiscount?: boolean;
+//   discountValue?: number;
+//   quantity?: number;
+// }
+
+interface SugarProductsData {
+  sugarProducts: SugarProductSchema[];
+}
+
+const IndexPage: NextPage<SugarProductsData> = ({ sugarProducts }) => {
   console.log(sugarProducts);
   // const count = useSelector(selectValue);
   // const dispatch = useDispatch();
@@ -37,7 +55,7 @@ const IndexPage = ({ sugarProducts }) => {
               title={product.title}
               brand={product.brand}
               price={product.price}
-              coverImage={product.coverImage.url}
+              coverImage={product.coverImage}
               id={product.id}
               slug={product.slug}
               stock={product.stock}

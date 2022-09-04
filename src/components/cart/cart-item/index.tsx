@@ -9,6 +9,7 @@ import {
   Flex,
   Button,
   HStack,
+  BoxProps,
 } from '@chakra-ui/react';
 import { addToCart, selectAllDataFromStore } from 'src/redux/slices/cartSlice';
 import { useSelector, useDispatch } from 'react-redux';
@@ -18,11 +19,20 @@ import {
   removeItem,
 } from 'src/redux/slices/cartSlice';
 import CartProductMeta from '../cart-product-meta';
+import NextLink from 'next/link';
+
+import { motion, Variants, AnimatePresence } from 'framer-motion';
+
+import { AnimateSharedLayout } from 'framer-motion';
+const MotionBox = motion<BoxProps>(Box);
 
 const CartComponent = ({ item }) => {
-  const selectProducts = useSelector(selectAllDataFromStore);
+  // const selectProducts = useSelector(selectAllDataFromStore);
   // console.log(selectIdOfTheProduct);
   const dispatch = useDispatch();
+
+  const fullPrice = item.price * item.quantity;
+  console.log('full price', fullPrice);
 
   return (
     <Box>
@@ -41,16 +51,20 @@ const CartComponent = ({ item }) => {
 
       <Flex direction='row' alignItems='center' gap='2' justifyContent='center'>
         <HStack mt={2}>
-          <Image
-            rounded='lg'
-            width='160px'
-            height='160px'
-            fit='cover'
-            src={item.coverImage}
-            alt={item.title}
-            draggable='false'
-            loading='lazy'
-          />
+          <NextLink href={`/products/${item.slug}`} passHref>
+            <Link>
+              <Image
+                rounded='lg'
+                width='300px'
+                height='160px'
+                fit='cover'
+                src={item.coverImage.url}
+                alt={item.title}
+                draggable='false'
+                loading='lazy'
+              />
+            </Link>
+          </NextLink>
           <Box pt='4' textAlign='center' justifyContent='center' width='300px'>
             <Stack spacing='0.5'>
               <Text fontWeight='medium'>{item.title}</Text>
@@ -68,7 +82,9 @@ const CartComponent = ({ item }) => {
             >
               +
             </Button>
-            <Text>{item.quantity}</Text>
+            <Text fontWeight={500} width='20px' textAlign='center'>
+              {item.quantity}
+            </Text>
             <Button
               rounded='xl'
               size='sm'
@@ -79,7 +95,7 @@ const CartComponent = ({ item }) => {
             </Button>
             <Box width='100px' textAlign='center'>
               <Text fontWeight={800} fontSize={'xl'}>
-                {item.price}PLN
+                {fullPrice}PLN
               </Text>
             </Box>
             <Button

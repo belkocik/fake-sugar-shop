@@ -18,7 +18,7 @@ export type SugarProductSchema = {
   title: string;
   brand?: string;
   price?: number;
-  coverImage?: string;
+  coverImage?: { url: string };
   id: string;
   slug?: string;
   stock: number;

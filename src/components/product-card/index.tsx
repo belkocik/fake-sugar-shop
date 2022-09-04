@@ -73,7 +73,7 @@ export const ProductCard = ({
             pos: 'absolute',
             top: 5,
             left: 0,
-            backgroundImage: `url(${coverImage})`,
+            backgroundImage: `url(${coverImage.url})`,
             filter: 'blur(15px)',
             zIndex: -1,
           }}
@@ -88,7 +88,7 @@ export const ProductCard = ({
             height={230}
             width={282}
             objectFit={'cover'}
-            src={coverImage}
+            src={coverImage.url}
           />
         </Box>
 
@@ -142,6 +142,7 @@ export const ProductCard = ({
                         stock,
                         price,
                         quantity,
+                        slug,
                       })
                     )
                   }

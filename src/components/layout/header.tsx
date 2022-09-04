@@ -11,6 +11,9 @@ const Header = () => {
       p={8}
       zIndex='tooltip'
       w='100%'
+      sx={{
+        backdropFilter: 'blur(5px)',
+      }}
     >
       <Logo />
       <Spacer />

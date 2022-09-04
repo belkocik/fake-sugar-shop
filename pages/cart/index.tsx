@@ -13,7 +13,7 @@ import {
   Button,
   BoxProps,
 } from '@chakra-ui/react';
-import { addToCart, selectAllDataFromStore } from 'src/redux/slices/cartSlice';
+import { selectAllDataFromStore } from 'src/redux/slices/cartSlice';
 import {
   decrementQuantity,
   incrementQuantity,
@@ -27,7 +27,7 @@ import {
   AnimateSharedLayout,
   LayoutGroup,
 } from 'framer-motion';
-import { useState, useEffect } from 'react';
+
 import NextLink from 'next/link';
 
 const container = {
@@ -49,13 +49,6 @@ const MotionBox = motion<BoxProps>(Box);
 const Cart = () => {
   const selectProducts = useSelector(selectAllDataFromStore);
   // console.log(selectIdOfTheProduct);
-  const [loading, setIsLoading] = useState(true);
-  useEffect(() => {
-    setIsLoading(false);
-    // console.log('CART.LENGTH is ', cart.length);
-  }, []);
-
-  console.log('length of', selectProducts.length);
 
   return (
     <>
@@ -78,6 +71,7 @@ const Cart = () => {
               <MotionBox
                 initial={{ opacity: 0, y: -400 }}
                 animate={{ opacity: 1, y: 0, transition: { duration: 2 } }}
+                zIndex='tooltip'
               >
                 <Flex direction='column' align='center' justify='center'>
                   <Heading as='h3' fontSize='3xl'>

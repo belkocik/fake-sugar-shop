@@ -72,7 +72,7 @@ const Cart = () => {
             })}
             {selectProducts.length > 0 && (
               <Box pt={4} overflow='hidden'>
-                <Center w='80vw'>
+                <Center w='60vw'>
                   <Divider orientation='horizontal' />
                 </Center>
                 <Button mt={2} onClick={() => dispatch(clearCart())}>

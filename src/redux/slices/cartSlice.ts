@@ -126,12 +126,21 @@ const cartSlice = createSlice({
       state.cart = removeItem;
       toast.error(`Usunieto ${itemData.title} z koszyka`);
     },
+    clearCart: (state) => {
+      toast.error('Usunięto wszystkie produkty z koszyka');
+      return { ...state, cart: [] };
+    },
   },
 });
 
 // action creators are genereated for each case reducer function
-export const { addToCart, incrementQuantity, decrementQuantity, removeItem } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  incrementQuantity,
+  decrementQuantity,
+  removeItem,
+  clearCart,
+} = cartSlice.actions;
 
 // selector
 export const selectAllDataFromStore = (state: RootState) => state.cart.cart;

@@ -6,8 +6,10 @@ const Footer = () => {
       align='center'
       opacity={{ base: '0.6', lg: '0.7' }}
       fontSize='sm'
-      pt={10}
-      pb={4}
+      // pt={10}
+      // pb={4}
+      as='footer'
+      py={{ base: '32', md: '4' }}
     >
       <Box>
         &copy; {new Date().getFullYear()} sklep internetowy drogi-cukier

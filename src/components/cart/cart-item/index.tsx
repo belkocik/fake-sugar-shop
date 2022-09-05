@@ -10,6 +10,8 @@ import {
   Button,
   HStack,
   BoxProps,
+  VStack,
+  Spacer,
 } from '@chakra-ui/react';
 import { addToCart, selectAllDataFromStore } from 'src/redux/slices/cartSlice';
 import { useSelector, useDispatch } from 'react-redux';
@@ -35,22 +37,17 @@ const CartComponent = ({ item }) => {
   console.log('full price', fullPrice);
 
   return (
-    <Box>
-      {/* <hr />
-      <Text>{item.title}</Text>
-      <Text>Brand: {item.brand}</Text>
+    <Flex
+      direction={{ base: 'column', md: 'row' }}
+      alignItems='center'
+      gap='2'
+      justifyContent='center'
+      bg='gray.50'
+      p={8}
+      rounded='xl'
+    >
       <Box>
-        <Button onClick={() => dispatch(incrementQuantity(item))}>+</Button>
-        <Text>ilosc: {item.quantity}</Text>
-        <Button onClick={() => dispatch(decrementQuantity(item.id))}>-</Button>
-      </Box>
-      <Button colorScheme={'red'} onClick={() => dispatch(removeItem(item))}>
-        x
-      </Button>
-      <hr /> */}
-
-      <Flex direction='row' alignItems='center' gap='2' justifyContent='center'>
-        <HStack mt={2}>
+        <Stack direction={{ base: 'column', md: 'row' }} align='center'>
           <NextLink href={`/products/${item.slug}`} passHref>
             <Link>
               <Image
@@ -73,31 +70,41 @@ const CartComponent = ({ item }) => {
               </Text>
             </Stack>
           </Box>
-          <Stack direction='row' align='center'>
-            <Button
-              rounded='xl'
-              size='sm'
-              onClick={() => dispatch(incrementQuantity(item))}
-              fontWeight={800}
-            >
-              +
-            </Button>
-            <Text fontWeight={500} width='20px' textAlign='center'>
-              {item.quantity}
-            </Text>
-            <Button
-              rounded='xl'
-              size='sm'
-              onClick={() => dispatch(decrementQuantity(item.id))}
-              fontWeight={800}
-            >
-              -
-            </Button>
+        </Stack>
+      </Box>
+
+      <Box>
+        <Stack direction={{ base: 'column', md: 'row' }} align='center'>
+          <Stack direction={{ base: 'column', md: 'row' }} align='center'>
+            <HStack>
+              {' '}
+              <Button
+                rounded='xl'
+                size='sm'
+                onClick={() => dispatch(incrementQuantity(item))}
+                fontWeight={800}
+              >
+                +
+              </Button>
+              <Text fontWeight={500} width='20px' textAlign='center'>
+                {item.quantity}
+              </Text>
+              <Button
+                rounded='xl'
+                size='sm'
+                onClick={() => dispatch(decrementQuantity(item.id))}
+                fontWeight={800}
+              >
+                -
+              </Button>
+            </HStack>
+
             <Box width='100px' textAlign='center'>
               <Text fontWeight={800} fontSize={'xl'}>
                 {fullPrice}PLN
               </Text>
             </Box>
+
             <Button
               colorScheme={'red'}
               onClick={() => dispatch(removeItem(item))}
@@ -108,9 +115,9 @@ const CartComponent = ({ item }) => {
               X
             </Button>
           </Stack>
-        </HStack>
-      </Flex>
-    </Box>
+        </Stack>
+      </Box>
+    </Flex>
   );
 };
 

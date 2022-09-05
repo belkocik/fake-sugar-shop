@@ -12,7 +12,6 @@ html {
 }
 
 #logo-box:hover #logo-box-child {
-  /* transform: rotate(10deg); */
   transition: 200ms ease;
   animation: childanim 0.7s alternate;
 }

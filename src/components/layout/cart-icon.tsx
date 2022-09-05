@@ -60,10 +60,10 @@ const CartIcon = () => {
             size='sm'
             // src='https://icons.veryicon.com/png/o/miscellaneous/unicons/cart-38.png'
             src='/assets/images/cart-icon.svg'
-            bg='gray.50'
+            bg='none'
           >
             {itemsInCart > 0 && (
-              <AvatarBadge borderColor='gray.100' bg='teal.200' boxSize='1.7em'>
+              <AvatarBadge borderColor='black' bg='teal.200' boxSize='1.7em'>
                 <Text>{itemsInCart}</Text>
               </AvatarBadge>
             )}

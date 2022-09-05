@@ -15,7 +15,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <Layout>
-            <Toaster position='top-center' />
+            <Toaster position='bottom-center' />
             <Component {...pageProps} />
           </Layout>
         </PersistGate>

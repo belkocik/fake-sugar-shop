@@ -99,6 +99,35 @@ export const ProductCard = ({
             objectFit={'cover'}
             src={coverImage.url}
           />
+          {isOnDiscount && isNewProduct ? (
+            <Flex
+              position='absolute'
+              gap={1}
+              left='50%'
+              transform='translateX(-50%)'
+            >
+              <Badge colorScheme='pink'>Nowy</Badge>
+              <Badge colorScheme='purple'>Promocja -{discountValue}%</Badge>
+            </Flex>
+          ) : isOnDiscount ? (
+            <Badge
+              colorScheme='purple'
+              position='absolute'
+              left='50%'
+              transform='translateX(-50%)'
+            >
+              Promocja -{discountValue}%
+            </Badge>
+          ) : isNewProduct ? (
+            <Badge
+              colorScheme='pink'
+              position='absolute'
+              left='50%'
+              transform='translateX(-50%)'
+            >
+              Nowy
+            </Badge>
+          ) : null}
         </Box>
 
         <Stack pt={10} align={'center'}>
@@ -134,15 +163,6 @@ export const ProductCard = ({
                 </Text>
                 <Text fontWeight={800}>{discountPrice}PLN</Text>
               </Flex>
-            ) : isNewProduct ? (
-              <>
-                <Badge colorScheme='pink' mt='2px'>
-                  Nowy
-                </Badge>
-                <Text fontWeight={800} fontSize={'xl'}>
-                  {price}PLN
-                </Text>
-              </>
             ) : (
               <Text fontWeight={800} fontSize={'xl'}>
                 {price}PLN

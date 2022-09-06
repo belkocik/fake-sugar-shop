@@ -71,12 +71,19 @@ const CartComponent = ({ item }) => {
           </NextLink>
           <Box textAlign='center' justifyContent='center' width='300px'>
             <Stack spacing='0.5' align='center'>
-              {item.isNewProduct ? (
-                <Badge colorScheme='pink'>Nowy</Badge>
+              {item.isOnDiscount && item.isNewProduct ? (
+                <Flex gap={1}>
+                  <Badge colorScheme='pink'>Nowy</Badge>
+                  <Badge colorScheme='purple'>
+                    Promocja -{item.discountValue}%
+                  </Badge>
+                </Flex>
               ) : item.isOnDiscount ? (
                 <Badge colorScheme='purple'>
                   Promocja -{item.discountValue}%
                 </Badge>
+              ) : item.isNewProduct ? (
+                <Badge colorScheme='pink'>Nowy</Badge>
               ) : null}
               <Text fontWeight='medium'>{item.title}</Text>
               <Text color='gray.400' fontSize='sm'>

@@ -2,6 +2,10 @@ html {
   overflow-y: overlay;
 }
 
+::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
 @keyframes childanim {
   from {
     transform: rotate(0deg);

@@ -9,7 +9,7 @@ const Footer = () => {
       // pt={10}
       // pb={4}
       as='footer'
-      py={{ base: '36', md: '4' }}
+      py={{ base: '4', md: '6' }}
     >
       <Box>
         &copy; {new Date().getFullYear()} sklep internetowy drogi-cukier

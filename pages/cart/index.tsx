@@ -60,14 +60,14 @@ const Cart = () => {
 
   const selectProducts = useSelector(selectAllDataFromStore);
   const dispatch = useDispatch();
-
+  console.log('cart select products', selectProducts);
   // ------------- calc total amount start ------------------------
   let shipping = 10;
   const allItemsSubtotals = [];
   !loading &&
     selectProducts.length &&
     selectProducts.map((item) => {
-      const subtotal = item.onDiscount
+      const subtotal = item.isOnDiscount
         ? item.price * item.quantity -
           item.price * item.quantity * (item.discountValue / 100)
         : item.price * item.quantity;
@@ -109,7 +109,12 @@ const Cart = () => {
                   </NextLink>
                   <Button
                     colorScheme='red'
-                    onClick={() => dispatch(clearCart())}
+                    onClick={() => {
+                      dispatch(clearCart());
+                      if (typeof window !== 'undefined') {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }
+                    }}
                   >
                     Wyczyść koszyk
                   </Button>

@@ -26,6 +26,9 @@ export const getSugarProducts = async () => {
         price
         brand
         stock
+        isNewProduct
+        isOnDiscount
+        discountValue
       }
     }
   `;

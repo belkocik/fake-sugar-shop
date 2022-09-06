@@ -26,6 +26,8 @@ import NextLink from 'next/link';
 import { motion, Variants, AnimatePresence } from 'framer-motion';
 
 import { AnimateSharedLayout } from 'framer-motion';
+import { insertDecimal } from '@/utils/insertDecimal';
+import useGetItemDetails from '@/utils/useGetItemDetails';
 const MotionBox = motion<BoxProps>(Box);
 
 const CartComponent = ({ item }) => {
@@ -33,8 +35,12 @@ const CartComponent = ({ item }) => {
   // console.log(selectIdOfTheProduct);
   const dispatch = useDispatch();
 
-  const fullPrice = item.price * item.quantity;
-  console.log('full price', fullPrice);
+  // calc price start
+  const fullPrice = insertDecimal(item.price * item.quantity);
+  const { price, discountValue } = item;
+  const { discountPrice } = useGetItemDetails(price, discountValue);
+  const discountFullPrice = insertDecimal(discountPrice * item.quantity);
+  // calc price end
 
   return (
     <Flex
@@ -62,7 +68,7 @@ const CartComponent = ({ item }) => {
               />
             </Link>
           </NextLink>
-          <Box pt='4' textAlign='center' justifyContent='center' width='300px'>
+          <Box textAlign='center' justifyContent='center' width='300px'>
             <Stack spacing='0.5'>
               <Text fontWeight='medium'>{item.title}</Text>
               <Text color='gray.400' fontSize='sm'>
@@ -75,46 +81,44 @@ const CartComponent = ({ item }) => {
 
       <Box>
         <Stack direction={{ base: 'column', md: 'row' }} align='center'>
-          <Stack direction={{ base: 'column', md: 'row' }} align='center'>
-            <HStack>
-              {' '}
-              <Button
-                rounded='xl'
-                size='sm'
-                onClick={() => dispatch(incrementQuantity(item))}
-                fontWeight={800}
-              >
-                +
-              </Button>
-              <Text fontWeight={500} width='20px' textAlign='center'>
-                {item.quantity}
-              </Text>
-              <Button
-                rounded='xl'
-                size='sm'
-                onClick={() => dispatch(decrementQuantity(item.id))}
-                fontWeight={800}
-              >
-                -
-              </Button>
-            </HStack>
-
-            <Box width='100px' textAlign='center'>
-              <Text fontWeight={800} fontSize={'xl'}>
-                {fullPrice}PLN
-              </Text>
-            </Box>
-
+          <HStack mr={{ base: 0, md: 4 }}>
+            {' '}
             <Button
-              colorScheme={'red'}
-              onClick={() => dispatch(removeItem(item))}
               rounded='xl'
               size='sm'
+              onClick={() => dispatch(incrementQuantity(item))}
               fontWeight={800}
             >
-              X
+              +
             </Button>
-          </Stack>
+            <Text fontWeight={500} width='20px' textAlign='center'>
+              {item.quantity}
+            </Text>
+            <Button
+              rounded='xl'
+              size='sm'
+              onClick={() => dispatch(decrementQuantity(item.id))}
+              fontWeight={800}
+            >
+              -
+            </Button>
+          </HStack>
+
+          <Box width='120px' textAlign='center'>
+            <Text fontWeight={800} fontSize={'xl'}>
+              {item.isOnDiscount ? discountFullPrice : fullPrice}PLN
+            </Text>
+          </Box>
+
+          <Button
+            colorScheme={'red'}
+            onClick={() => dispatch(removeItem(item))}
+            rounded='xl'
+            size='sm'
+            fontWeight={800}
+          >
+            X
+          </Button>
         </Stack>
       </Box>
     </Flex>

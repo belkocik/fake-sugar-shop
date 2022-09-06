@@ -11,6 +11,7 @@ import {
   Tooltip,
   Flex,
   Link,
+  Badge,
 } from '@chakra-ui/react';
 import { FiShoppingBag } from 'react-icons/fi';
 import { SugarProductSchema } from '@/types/sugar-product-schema';
@@ -20,7 +21,8 @@ import NextLink from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 // import { decrement, increment, selectValue } from 'src/redux/slices/cartSlice';
 import { addToCart, selectAllDataFromStore } from 'src/redux/slices/cartSlice';
-import { RootState } from 'src/redux/store';
+import { insertDecimal } from '@/utils/insertDecimal';
+import useGetItemDetails from '@/utils/useGetItemDetails';
 
 export const ProductCard = ({
   title,
@@ -31,13 +33,16 @@ export const ProductCard = ({
   slug,
   stock,
   quantity,
+  isOnDiscount,
+  discountValue,
+  isNewProduct,
 }: SugarProductSchema) => {
   // const count = useSelector(selectValue);
   // const dispatch = useDispatch();
   // console.log(title);
 
-  const selectIdOfTheProduct = useSelector(selectAllDataFromStore);
-  console.log(selectIdOfTheProduct);
+  // const selectIdOfTheProduct = useSelector(selectAllDataFromStore);
+  // console.log(selectIdOfTheProduct);
   const dispatch = useDispatch();
   // const handleAddToCart = (id, title) => {
   //   dispatch(
@@ -46,9 +51,13 @@ export const ProductCard = ({
   //   console.log(id);
   //   // toast.success('Dodano produkt do koszyka');
   // };
+
+  // const discountPrice = insertDecimal(price - price * (discountValue / 100));
+
+  const { discountPrice } = useGetItemDetails(price, discountValue);
+
   return (
     <Center py={12}>
-      {/* <Toaster /> */}
       <Box
         role={'group'}
         p={6}
@@ -112,12 +121,33 @@ export const ProductCard = ({
             </Link>
           </NextLink>
           <HStack>
-            <Text fontWeight={800} fontSize={'xl'}>
-              {price}PLN
-            </Text>
-            {/* <Text textDecoration={'line-through'} color={'gray.600'}>
-              $199
-            </Text> */}
+            {isOnDiscount ? (
+              <Flex align='center' fontSize={'xl'} direction={'row'}>
+                <Text
+                  textDecoration={'line-through'}
+                  color={'gray.600'}
+                  fontSize='sm'
+                  pt='1px'
+                  pr={1}
+                >
+                  {price}PLN
+                </Text>
+                <Text fontWeight={800}>{discountPrice}PLN</Text>
+              </Flex>
+            ) : isNewProduct ? (
+              <>
+                <Badge colorScheme='pink' mt='2px'>
+                  New
+                </Badge>
+                <Text fontWeight={800} fontSize={'xl'}>
+                  {price}PLN
+                </Text>
+              </>
+            ) : (
+              <Text fontWeight={800} fontSize={'xl'}>
+                {price}PLN
+              </Text>
+            )}
 
             <Tooltip
               label='Dodaj do koszyka'
@@ -143,6 +173,9 @@ export const ProductCard = ({
                         price,
                         quantity,
                         slug,
+                        isOnDiscount,
+                        isNewProduct,
+                        discountValue,
                       })
                     )
                   }

@@ -25,6 +25,7 @@ const Logo = () => {
                 transform: 'rotate(20deg)',
               }}
               id='logo-box-child'
+              color='black'
             />
 
             <Heading as='h1' display={{ base: 'none', sm: 'inline-block' }}>

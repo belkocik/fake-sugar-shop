@@ -59,6 +59,10 @@ const IndexPage: NextPage<SugarProductsData> = ({ sugarProducts }) => {
               id={product.id}
               slug={product.slug}
               stock={product.stock}
+              isOnDiscount={product.isOnDiscount}
+              discountValue={product.discountValue}
+              isNewProduct={product.isNewProduct}
+              //
               // quantity={product.quantity}
             />
           </Box>

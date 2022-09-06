@@ -22,7 +22,8 @@ export type SugarProductSchema = {
   id: string;
   slug?: string;
   stock: number;
-  onDiscount?: boolean;
+  isNewProduct?: boolean;
+  isOnDiscount?: boolean;
   discountValue?: number;
   quantity?: number;
 };

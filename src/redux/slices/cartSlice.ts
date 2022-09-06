@@ -28,7 +28,7 @@ interface CartState {
   id: string;
   slug?: string;
   stock: number;
-  onDiscount?: boolean;
+  isOnDiscount?: boolean;
   discountValue?: number;
   quantity?: number;
 }

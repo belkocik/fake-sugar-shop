@@ -10,6 +10,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^1.9.1",
     "@chakra-ui/icons": "^2.0.9",
     "@chakra-ui/react": "^2.2.1",
     "@emotion/react": "^11.7.1",

@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
 import { insertDecimal } from '@/utils/insertDecimal';
+import { FaArrowRight } from 'react-icons/fa';
 
 const CartTotal = ({ total, shipping }) => {
   const finalPrice = insertDecimal(total + shipping);
@@ -34,7 +35,7 @@ const CartTotal = ({ total, shipping }) => {
         <Text>Suma</Text>
         <Text fontWeight={500}>{finalPrice}PLN</Text>
       </HStack>
-      <Button mt={4} colorScheme='green'>
+      <Button mt={4} colorScheme='green' rightIcon={<FaArrowRight />} size='lg'>
         Zaloguj się aby kontynuować
       </Button>
     </Flex>

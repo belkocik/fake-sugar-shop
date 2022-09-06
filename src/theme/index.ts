@@ -29,13 +29,20 @@ const fonts = {
 };
 
 const components = {
-  Button: {
-    variants: {
-      pill: (props) => ({
-        ...base.components.Button.variants.outline(props),
-        rounded: 'full',
-        color: 'gray.500',
-      }),
+  // Button: {
+  //   variants: {
+  //     pill: (props) => ({
+  //       ...base.components.Button.variants.outline(props),
+  //       rounded: 'full',
+  //       color: 'gray.500',
+  //     }),
+  //   },
+  // },
+  CloseButton: {
+    baseStyle: {
+      _hover: {
+        bg: 'red.500',
+      },
     },
   },
 };
@@ -45,5 +52,5 @@ const config = {
   useSystemColorMode: false,
 };
 
-const theme = extendTheme({ config, styles, fonts });
+const theme = extendTheme({ config, styles, fonts, components });
 export default theme;

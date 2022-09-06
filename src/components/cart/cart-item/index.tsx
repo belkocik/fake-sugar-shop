@@ -23,10 +23,10 @@ import {
 } from 'src/redux/slices/cartSlice';
 
 import NextLink from 'next/link';
+import { CloseButton } from '@chakra-ui/react';
 
 import { motion, Variants, AnimatePresence } from 'framer-motion';
 
-import { AnimateSharedLayout } from 'framer-motion';
 import { insertDecimal } from '@/utils/insertDecimal';
 import useGetItemDetails from '@/utils/useGetItemDetails';
 const MotionBox = motion<BoxProps>(Box);
@@ -74,7 +74,9 @@ const CartComponent = ({ item }) => {
               {item.isNewProduct ? (
                 <Badge colorScheme='pink'>Nowy</Badge>
               ) : item.isOnDiscount ? (
-                <Badge colorScheme='purple'>Promocja</Badge>
+                <Badge colorScheme='purple'>
+                  Promocja -{item.discountValue}%
+                </Badge>
               ) : null}
               <Text fontWeight='medium'>{item.title}</Text>
               <Text color='gray.400' fontSize='sm'>
@@ -116,7 +118,7 @@ const CartComponent = ({ item }) => {
             </Text>
           </Box>
 
-          <Button
+          {/* <Button
             colorScheme={'red'}
             onClick={() => dispatch(removeItem(item))}
             rounded='xl'
@@ -124,7 +126,11 @@ const CartComponent = ({ item }) => {
             fontWeight={800}
           >
             X
-          </Button>
+          </Button> */}
+          <CloseButton
+            onClick={() => dispatch(removeItem(item))}
+            colorScheme='red'
+          />
         </Stack>
       </Box>
     </Flex>

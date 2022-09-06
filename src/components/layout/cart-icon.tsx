@@ -61,6 +61,7 @@ const CartIcon = () => {
             // src='https://icons.veryicon.com/png/o/miscellaneous/unicons/cart-38.png'
             src='/assets/images/cart-icon.svg'
             bg='none'
+            mr={2}
           >
             {itemsInCart > 0 && (
               <AvatarBadge borderColor='black' bg='teal.200' boxSize='1.7em'>

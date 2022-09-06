@@ -1,4 +1,5 @@
-import { HStack, Spacer, Container, Box } from '@chakra-ui/react';
+import { HStack, Spacer, Container, Box, Link } from '@chakra-ui/react';
+import AuthLinks from './auth-links';
 import CartIcon from './cart-icon';
 import Logo from './logo';
 
@@ -21,6 +22,7 @@ const Header = () => {
             <Logo />
             <Spacer />
             <CartIcon />
+            <AuthLinks />
           </HStack>
         </Container>
       </Box>

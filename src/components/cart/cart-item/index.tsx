@@ -10,6 +10,7 @@ import {
   Button,
   HStack,
   BoxProps,
+  Badge,
   VStack,
   Spacer,
 } from '@chakra-ui/react';
@@ -20,7 +21,7 @@ import {
   incrementQuantity,
   removeItem,
 } from 'src/redux/slices/cartSlice';
-import CartProductMeta from '../cart-product-meta';
+
 import NextLink from 'next/link';
 
 import { motion, Variants, AnimatePresence } from 'framer-motion';
@@ -69,7 +70,12 @@ const CartComponent = ({ item }) => {
             </Link>
           </NextLink>
           <Box textAlign='center' justifyContent='center' width='300px'>
-            <Stack spacing='0.5'>
+            <Stack spacing='0.5' align='center'>
+              {item.isNewProduct ? (
+                <Badge colorScheme='pink'>Nowy</Badge>
+              ) : item.isOnDiscount ? (
+                <Badge colorScheme='purple'>Promocja</Badge>
+              ) : null}
               <Text fontWeight='medium'>{item.title}</Text>
               <Text color='gray.400' fontSize='sm'>
                 {item.brand}

@@ -127,7 +127,7 @@ export const ProductCard = ({
                   textDecoration={'line-through'}
                   color={'gray.600'}
                   fontSize='sm'
-                  pt='1px'
+                  pt='3px'
                   pr={1}
                 >
                   {price}PLN
@@ -137,7 +137,7 @@ export const ProductCard = ({
             ) : isNewProduct ? (
               <>
                 <Badge colorScheme='pink' mt='2px'>
-                  New
+                  Nowy
                 </Badge>
                 <Text fontWeight={800} fontSize={'xl'}>
                   {price}PLN

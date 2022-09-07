@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
 import { PersistGate } from 'redux-persist/integration/react';
 import { UserProvider } from '@auth0/nextjs-auth0';
+import NextNProgress from 'nextjs-progressbar';
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
@@ -17,6 +18,11 @@ const App = ({ Component, pageProps }: AppProps) => {
         <UserProvider>
           <PersistGate persistor={persistor}>
             <Layout>
+              <NextNProgress
+                options={{ easing: 'ease', speed: 500 }}
+                color='teal'
+                height={4}
+              />
               <Toaster position='bottom-center' />
               <Component {...pageProps} />
             </Layout>
@@ -28,3 +34,5 @@ const App = ({ Component, pageProps }: AppProps) => {
 };
 
 export default App;
+
+// options={{ showSpinner: false }}

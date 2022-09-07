@@ -106,12 +106,12 @@ export const ProductCard = ({
               left='50%'
               transform='translateX(-50%)'
             >
-              <Badge colorScheme='pink'>Nowy</Badge>
-              <Badge colorScheme='purple'>Promocja -{discountValue}%</Badge>
+              <Badge colorScheme='purple'>Nowy</Badge>
+              <Badge colorScheme='red'>Promocja -{discountValue}%</Badge>
             </Flex>
           ) : isOnDiscount ? (
             <Badge
-              colorScheme='purple'
+              colorScheme='red'
               position='absolute'
               left='50%'
               transform='translateX(-50%)'
@@ -120,7 +120,7 @@ export const ProductCard = ({
             </Badge>
           ) : isNewProduct ? (
             <Badge
-              colorScheme='pink'
+              colorScheme='purple'
               position='absolute'
               left='50%'
               transform='translateX(-50%)'

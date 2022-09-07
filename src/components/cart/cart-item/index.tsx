@@ -73,17 +73,15 @@ const CartComponent = ({ item }) => {
             <Stack spacing='0.5' align='center'>
               {item.isOnDiscount && item.isNewProduct ? (
                 <Flex gap={1}>
-                  <Badge colorScheme='pink'>Nowy</Badge>
-                  <Badge colorScheme='purple'>
+                  <Badge colorScheme='purple'>Nowy</Badge>
+                  <Badge colorScheme='red'>
                     Promocja -{item.discountValue}%
                   </Badge>
                 </Flex>
               ) : item.isOnDiscount ? (
-                <Badge colorScheme='purple'>
-                  Promocja -{item.discountValue}%
-                </Badge>
+                <Badge colorScheme='red'>Promocja -{item.discountValue}%</Badge>
               ) : item.isNewProduct ? (
-                <Badge colorScheme='pink'>Nowy</Badge>
+                <Badge colorScheme='purple'>Nowy</Badge>
               ) : null}
               <Text fontWeight='medium'>{item.title}</Text>
               <Text color='gray.400' fontSize='sm'>

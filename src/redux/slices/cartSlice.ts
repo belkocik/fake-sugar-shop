@@ -127,7 +127,7 @@ const cartSlice = createSlice({
       toast.error(`Usunieto ${itemData.title} z koszyka`);
     },
     clearCart: (state) => {
-      toast.error('Usunięto wszystkie produkty z koszyka');
+      // toast.error('Usunięto wszystkie produkty z koszyka');
       return { ...state, cart: [] };
     },
   },

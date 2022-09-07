@@ -19,3 +19,8 @@ html {
   transition: 200ms ease;
   animation: childanim 0.7s alternate;
 }
+
+#nprogress {
+  position: relative;
+  z-index: 9999999;
+}

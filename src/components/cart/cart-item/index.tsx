@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Box,
-  Icon,
   Image,
   Link,
   Stack,
@@ -11,8 +10,9 @@ import {
   HStack,
   BoxProps,
   Badge,
-  VStack,
-  Spacer,
+  useNumberInput,
+  Input,
+  Tooltip,
 } from '@chakra-ui/react';
 import { addToCart, selectAllDataFromStore } from 'src/redux/slices/cartSlice';
 import { useSelector, useDispatch } from 'react-redux';
@@ -43,6 +43,19 @@ const CartComponent = ({ item }) => {
   const discountFullPrice = insertDecimal(discountPrice * item.quantity);
   // calc price end
 
+  const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
+    useNumberInput({
+      step: 1,
+      defaultValue: 1,
+      min: 1,
+      max: item.stock,
+      precision: 0,
+    });
+
+  const inc = getIncrementButtonProps();
+  const dec = getDecrementButtonProps();
+  const input = getInputProps();
+
   return (
     <Flex
       direction={{ base: 'column', md: 'row' }}
@@ -57,16 +70,25 @@ const CartComponent = ({ item }) => {
         <Stack direction={{ base: 'column', md: 'row' }} align='center'>
           <NextLink href={`/products/${item.slug}`} passHref>
             <Link>
-              <Image
-                rounded='lg'
-                width='300px'
-                height='160px'
-                fit='cover'
-                src={item.coverImage.url}
-                alt={item.title}
-                draggable='false'
-                loading='lazy'
-              />
+              <Tooltip
+                label='Zobacz produkt'
+                fontSize='md'
+                bg='gray.50'
+                hasArrow
+                placement='bottom'
+                aria-label='A tooltip'
+              >
+                <Image
+                  rounded='lg'
+                  width='300px'
+                  height='160px'
+                  fit='cover'
+                  src={item.coverImage.url}
+                  alt={item.title}
+                  draggable='false'
+                  loading='lazy'
+                />
+              </Tooltip>
             </Link>
           </NextLink>
           <Box textAlign='center' justifyContent='center' width='300px'>
@@ -95,23 +117,13 @@ const CartComponent = ({ item }) => {
       <Box>
         <Stack direction={{ base: 'column', md: 'row' }} align='center'>
           <HStack mr={{ base: 0, md: 4 }}>
-            {' '}
-            <Button
-              rounded='xl'
-              size='sm'
-              onClick={() => dispatch(incrementQuantity(item))}
-              fontWeight={800}
-            >
+            <Button {...inc} onClick={() => dispatch(incrementQuantity(item))}>
               +
             </Button>
-            <Text fontWeight={500} width='20px' textAlign='center'>
-              {item.quantity}
-            </Text>
+            <Input {...input} w='80px' textAlign='center' />
             <Button
-              rounded='xl'
-              size='sm'
+              {...dec}
               onClick={() => dispatch(decrementQuantity(item.id))}
-              fontWeight={800}
             >
               -
             </Button>

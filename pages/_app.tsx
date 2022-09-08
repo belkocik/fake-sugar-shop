@@ -23,7 +23,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                 color='teal'
                 height={4}
               />
-              <Toaster position='bottom-center' />
+              <Toaster position='top-center' />
               <Component {...pageProps} />
             </Layout>
           </PersistGate>

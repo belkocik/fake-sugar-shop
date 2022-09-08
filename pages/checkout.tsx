@@ -16,7 +16,7 @@ const Checkout = () => {
 
   return (
     <PageLayout title='checkout' description='checkout desc'>
-      <CheckoutComp shipping={shipping} total={total} />
+      <CheckoutComp shipping={shipping} total={total} cart={selectProducts} />
     </PageLayout>
   );
 };

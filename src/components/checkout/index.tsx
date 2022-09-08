@@ -6,24 +6,18 @@ import {
   Heading,
   Box,
   VStack,
-  Link,
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { insertDecimal } from '@/utils/insertDecimal';
-// import { FaArrowRight } from 'react-icons/fa';
 import { useUser } from '@auth0/nextjs-auth0';
-// import NextLink from 'next/link';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { toast } from 'react-hot-toast';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  decrementQuantity,
-  incrementQuantity,
-  clearCart,
-} from 'src/redux/slices/cartSlice';
+import { useDispatch } from 'react-redux';
+import { clearCart } from 'src/redux/slices/cartSlice';
 import NextLink from 'next/link';
+import StockManager from '@/utils/StockManager';
 
-const CheckoutComp = ({ total, shipping }) => {
+const CheckoutComp = ({ total, shipping, cart }) => {
   const [paymentOk, setPaymentOk] = useState(``);
   const [loading, setIsLoading] = useState(true);
   const [updateStock, setUpdateStock] = useState(false);
@@ -38,14 +32,22 @@ const CheckoutComp = ({ total, shipping }) => {
     // eslint-disable-next-line
   }, [paymentOk]);
 
-  //   useEffect(() => {
-  //     !loading &&
-
-  //     // eslint-disable-next-line
-  //   }, [loading]);
+  useEffect(() => {
+    if (updateStock) {
+      StockManager(cart);
+    }
+    // eslint-disable-next-line
+  }, [updateStock]);
 
   return (
-    <Flex direction='column' fontWeight={500} bg='gray.50' p={6} rounded='lg'>
+    <Flex
+      direction='column'
+      fontWeight={500}
+      bg='gray.50'
+      p={6}
+      rounded='lg'
+      textAlign='center'
+    >
       <Heading as='h3'>Cześć, {user.nickname}👋</Heading>
       {finalPrice !== 0 && finalPrice > 10 && (
         <Box>
@@ -94,6 +96,7 @@ const CheckoutComp = ({ total, shipping }) => {
                         duration: 10000,
                         position: 'top-center',
                       });
+                      setUpdateStock(true);
                       if (typeof window !== 'undefined') {
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                       }
@@ -116,7 +119,7 @@ const CheckoutComp = ({ total, shipping }) => {
           </NextLink>
         )}
       </Flex>
-      <Box bg='blue.200' p={6} rounded='lg' mt={4}>
+      <Box bg='gray.100' p={6} rounded='lg' mt={4}>
         <VStack>
           <Heading as='h3'>Testowa karta do płatności</Heading>
           <Text>Numer karty: 4063337070732799</Text>

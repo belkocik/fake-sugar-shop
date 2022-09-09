@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { insertDecimal } from '@/utils/insertDecimal';
-import { useUser } from '@auth0/nextjs-auth0';
+// import { useUser } from '@auth0/nextjs-auth0';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { toast } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
@@ -20,7 +20,7 @@ import StockManager from '@/utils/StockManager';
 const CheckoutComp = ({ total, shipping, cart }) => {
   const [paymentOk, setPaymentOk] = useState(``);
   const [updateStock, setUpdateStock] = useState(false);
-  const { user } = useUser();
+  // const { user } = useUser();
   const finalPrice = insertDecimal(total + shipping);
   console.log('final price in checkout', finalPrice);
   console.log('stock manager cart:', cart);
@@ -47,7 +47,8 @@ const CheckoutComp = ({ total, shipping, cart }) => {
       rounded='lg'
       textAlign='center'
     >
-      <Heading as='h3'>Cześć, {user.nickname || ''}👋</Heading>
+      {/* <Heading as='h3'>Cześć, {user.nickname || ''}👋</Heading> */}
+      <Heading as='h3'>Cześć👋</Heading>
       {finalPrice !== 0 && finalPrice > 10 && (
         <Box>
           <HStack

@@ -35,6 +35,11 @@ const components = {
       },
     },
   },
+  Tooltip: {
+    baseStyle: {
+      color: 'black',
+    },
+  },
 };
 
 const config = {

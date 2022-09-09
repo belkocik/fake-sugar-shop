@@ -23,6 +23,7 @@ import { useDispatch } from 'react-redux';
 import NextLink from 'next/link';
 
 import { addToCart } from 'src/redux/slices/cartSlice';
+import useGetItemDetails from '@/utils/useGetItemDetails';
 
 const ProductSlugPage = ({ product }) => {
   // console.log(product.sugars[0]);
@@ -44,7 +45,7 @@ const ProductSlugPage = ({ product }) => {
   } = product;
   const dispatch = useDispatch();
 
-  console.log('product slug info', isOnDiscount);
+  const { discountPrice } = useGetItemDetails(price, discountValue);
 
   return (
     <PageLayout title='Slug page' description={`xd`}>
@@ -129,7 +130,7 @@ const ProductSlugPage = ({ product }) => {
         <Box>
           <HStack>
             <Text mb={1} fontWeight={800} fontSize={'xl'}>
-              {price}PLN
+              {isOnDiscount ? discountPrice : price}PLN
             </Text>
             <Tooltip
               label='Dodaj do koszyka'

@@ -19,6 +19,10 @@ What I used to create this project?
 ![alt text](https://media.graphassets.com/SNbYsTtkT1GIP7OLoCoQ)
 ![alt text](https://media.graphassets.com/UylfdQYZTAywn65kVDfT)
 
+### User is not logged in
+
+![alt text](https://media.graphassets.com/HnptHVhLQIWvSMQ2RDSQ)
+
 ### Live demo
 
 [https://drogi-cukier.vercel.app/](https://drogi-cukier.vercel.app/)

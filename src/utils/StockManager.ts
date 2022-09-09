@@ -1,5 +1,14 @@
-import hygraph from './graphqlRequestClient';
-import { gql } from 'graphql-request';
+// import hygraph from './graphqlRequestClient';
+import { GraphQLClient, gql } from 'graphql-request';
+
+const hygraphClient = new GraphQLClient(
+  process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT,
+  {
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_GRAPHCMS_TOKEN}`,
+    },
+  }
+);
 
 const GetProductById = gql`
   query GetProductById($id: ID!) {
@@ -29,8 +38,9 @@ interface productsArray {
 
 const StockManager = (cart) => {
   //-------------------------------
-  const checkProducts = async (theID: string, stockChange: number) => {
-    const itemFromCart = await hygraph.request(GetProductById, {
+  const checkProducts = async (theID, stockChange) => {
+    console.log('stockChange is:', stockChange);
+    const itemFromCart = await hygraphClient.request(GetProductById, {
       id: theID,
     });
     //------------------------
@@ -40,7 +50,8 @@ const StockManager = (cart) => {
     productsArray.map((item) => {
       if (item && item.id === theID) {
         const stock = item.stock - stockChange;
-        const updateStock = hygraph.request(UpdateProductStock, {
+
+        const updateStock = hygraphClient.request(UpdateProductStock, {
           id: theID,
           stock: stock,
         });
@@ -54,7 +65,7 @@ const StockManager = (cart) => {
   cart &&
     cart.map((item, idx) => {
       const theID = item.id;
-      const stockChange = item.numItems;
+      const stockChange = item.quantity;
       checkProducts(theID, stockChange);
     });
 };

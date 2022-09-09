@@ -24,20 +24,20 @@ const CheckoutComp = ({ total, shipping, cart }) => {
   const { user } = useUser();
   const finalPrice = insertDecimal(total + shipping);
   console.log('final price in checkout', finalPrice);
+  console.log('stock manager cart:', cart);
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (updateStock) {
+      StockManager(cart);
+    }
+  }, [updateStock]);
+
   useEffect(() => {
     if (paymentOk.length > 1) {
       dispatch(clearCart());
     }
     // eslint-disable-next-line
   }, [paymentOk]);
-
-  useEffect(() => {
-    if (updateStock) {
-      StockManager(cart);
-    }
-    // eslint-disable-next-line
-  }, [updateStock]);
 
   return (
     <Flex
@@ -85,22 +85,24 @@ const CheckoutComp = ({ total, shipping, cart }) => {
                   });
                 }}
                 onApprove={(data, actions) => {
-                  return actions.order
-                    .capture()
-
-                    .then((details) => {
-                      // const name = details.payer.name.given_name;
-                      // alert(`Transaction completed by ${name}`);
-                      setPaymentOk(`Transakcja przebiegła pomyślnie.`);
-                      toast.success(`Transakcja przebiegła pomyślnie.`, {
-                        duration: 10000,
-                        position: 'top-center',
-                      });
-                      setUpdateStock(true);
-                      if (typeof window !== 'undefined') {
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                      }
-                    });
+                  return (
+                    actions.order
+                      .capture()
+                      // .then(setUpdateStock(true))
+                      .then((details) => {
+                        // const name = details.payer.name.given_name;
+                        // alert(`Transaction completed by ${name}`);
+                        setUpdateStock(true);
+                        setPaymentOk(`Transakcja przebiegła pomyślnie.`);
+                        toast.success(`Transakcja przebiegła pomyślnie.`, {
+                          duration: 10000,
+                          position: 'top-center',
+                        });
+                        if (typeof window !== 'undefined') {
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                      })
+                  );
                 }}
               />
             </PayPalScriptProvider>

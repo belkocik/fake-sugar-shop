@@ -46,7 +46,7 @@ const CartComponent = ({ item }) => {
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
     useNumberInput({
       step: 1,
-      defaultValue: 1,
+      defaultValue: item.quantity,
       min: 1,
       max: item.stock,
       precision: 0,

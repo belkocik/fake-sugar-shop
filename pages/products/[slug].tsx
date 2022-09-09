@@ -58,7 +58,15 @@ const ProductSlugPage = ({ product }) => {
         textAlign='left'
       >
         <Box>
-          <Image src={coverImage.url} rounded='lg' />
+          <Image
+            src={coverImage.url}
+            width={{ base: '700px', lg: 'full' }}
+            height='500px'
+            rounded='lg'
+            alt={title}
+            fallbackSrc='https://via.placeholder.com/700x500'
+            objectFit='fill'
+          />
         </Box>
 
         <Box p={6}>

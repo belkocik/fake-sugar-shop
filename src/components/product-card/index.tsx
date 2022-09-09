@@ -79,6 +79,7 @@ export const ProductCard = ({
             width={282}
             objectFit={'cover'}
             src={coverImage.url}
+            alt={title}
           />
           {isOnDiscount && isNewProduct ? (
             <Flex

@@ -15,9 +15,7 @@ import { clearCart } from 'src/redux/slices/cartSlice';
 import CartComponent from '@/components/cart/cart-item';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-hot-toast';
-
 import NextLink from 'next/link';
-
 import CartTotal from '@/components/cart/cart-total';
 import useGetCartTotal from '@/utils/useGetCartTotal';
 
@@ -26,7 +24,6 @@ const MotionBox = motion<BoxProps>(Box);
 const Cart = () => {
   const selectProducts = useSelector(selectAllDataFromStore);
   const dispatch = useDispatch();
-
   const { shipping, total } = useGetCartTotal(selectProducts);
 
   return (

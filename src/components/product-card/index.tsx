@@ -122,7 +122,7 @@ export const ProductCard = ({
                 fontSize='md'
                 bg='gray.50'
                 hasArrow
-                placement='left'
+                placement='top'
               >
                 <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
                   {title}

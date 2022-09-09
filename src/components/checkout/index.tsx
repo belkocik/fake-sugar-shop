@@ -48,7 +48,7 @@ const CheckoutComp = ({ total, shipping, cart }) => {
       textAlign='center'
     >
       {/* <Heading as='h3'>Cześć, {user.nickname || ''}👋</Heading> */}
-      <Heading as='h3'>Cześć👋</Heading>
+      <Heading as='h3'>💰💸👛🤑💲💳</Heading>
       {finalPrice !== 0 && finalPrice > 10 && (
         <Box>
           <HStack

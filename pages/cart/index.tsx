@@ -94,38 +94,3 @@ const Cart = () => {
 };
 
 export default Cart;
-
-{
-  /* <AnimatePresence>
-{selectProducts.map((item) => {
-  return (
-    <motion.div
-      key={item.slug}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0, x: -200 }}
-    >
-      <CartComponent item={item} />
-    </motion.div>
-  );
-})}
-</AnimatePresence> */
-}
-
-{
-  /* {selectProducts.length < 1 && (
-              <MotionBox
-                initial={{ opacity: 0, y: -400 }}
-                animate={{ opacity: 1, y: 0, transition: { duration: 2 } }}
-                zIndex='tooltip'
-              >
-                <Flex direction='column' align='center' justify='center'>
-                  <Heading as='h3' fontSize='3xl'>
-                    Twój koszyk jest pusty.
-                  </Heading>
-                  <NextLink href='/' passHref>
-                    <Button colorScheme='gray'>Przeglądaj produkty</Button>
-                  </NextLink>
-                </Flex>
-              </MotionBox>
-            )} */
-}

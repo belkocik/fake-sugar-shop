@@ -34,5 +34,3 @@ const App = ({ Component, pageProps }: AppProps) => {
 };
 
 export default App;
-
-// options={{ showSpinner: false }}

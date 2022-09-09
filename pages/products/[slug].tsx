@@ -35,9 +35,8 @@ const ProductSlugPage = ({ product }) => {
     brand,
     description,
     coverImage,
-    stock,
     price,
-    quantity,
+    stock,
     slug,
     isOnDiscount,
     isNewProduct,
@@ -101,6 +100,7 @@ const ProductSlugPage = ({ product }) => {
           <Text color={'gray.500'} fontSize={'sm'} textTransform={'uppercase'}>
             {brand}
           </Text>
+          <Text color='blue.400'>Dostepność: {stock}</Text>
 
           <RichText
             content={description.raw}
@@ -161,7 +161,6 @@ const ProductSlugPage = ({ product }) => {
                         coverImage,
                         stock,
                         price,
-                        quantity,
                         slug,
                         isOnDiscount,
                         isNewProduct,
@@ -202,6 +201,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         isOnDiscount
         isNewProduct
         discountValue
+        stock
       }
     }
   `;

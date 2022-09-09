@@ -23,6 +23,11 @@ What I used to create this project?
 
 ![alt text](https://media.graphassets.com/HnptHVhLQIWvSMQ2RDSQ)
 
+### hygraph headlessCMS - adding products - server-side-rendering
+
+![alt text](https://media.graphassets.com/pE5FjqcgTkWOkn0qKSOr)
+![alt text](https://media.graphassets.com/7EmAp9nSmOB9X3rbXpVa)
+
 ### Live demo
 
 [https://drogi-cukier.vercel.app/](https://drogi-cukier.vercel.app/)

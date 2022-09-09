@@ -3,7 +3,6 @@ import { Text, Button, HStack, Flex, Heading } from '@chakra-ui/react';
 import { insertDecimal } from '@/utils/insertDecimal';
 import { FaArrowRight } from 'react-icons/fa';
 import { useUser } from '@auth0/nextjs-auth0';
-import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
 const CartTotal = ({ total, shipping }) => {
@@ -21,7 +20,7 @@ const CartTotal = ({ total, shipping }) => {
         <Text>Dostawa</Text>
         <Text>10PLN</Text>
       </HStack>
-      {/* <Divider orientation='horizontal' mt={1} mb={1} /> */}
+
       <HStack justify='space-between' bg='green.100' p={2} rounded='lg' mt={1}>
         <Text>Suma</Text>
         <Text fontWeight={500}>{finalPrice}PLN</Text>
@@ -34,9 +33,7 @@ const CartTotal = ({ total, shipping }) => {
         disabled={user ? false : true}
         onClick={() => router.push('/checkout')}
       >
-        {/* <NextLink href='/checkout' passHref> */}
         {user ? 'Przejdź do podsumowania' : 'Zaloguj się aby kontynuować'}
-        {/* </NextLink> */}
       </Button>
     </Flex>
   );

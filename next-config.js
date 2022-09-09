@@ -3,6 +3,10 @@
 /**
  * @type {import('next').NextConfig}
  **/
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    domains: ['media.graphcms.com', 'media.graphassets.com'],
+  },
+};
 
 module.exports = nextConfig;

@@ -19,7 +19,6 @@ import StockManager from '@/utils/StockManager';
 
 const CheckoutComp = ({ total, shipping, cart }) => {
   const [paymentOk, setPaymentOk] = useState(``);
-  const [loading, setIsLoading] = useState(true);
   const [updateStock, setUpdateStock] = useState(false);
   const { user } = useUser();
   const finalPrice = insertDecimal(total + shipping);
@@ -48,7 +47,7 @@ const CheckoutComp = ({ total, shipping, cart }) => {
       rounded='lg'
       textAlign='center'
     >
-      <Heading as='h3'>Cześć, {user.nickname}👋</Heading>
+      <Heading as='h3'>Cześć, {user.nickname || ''}👋</Heading>
       {finalPrice !== 0 && finalPrice > 10 && (
         <Box>
           <HStack

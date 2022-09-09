@@ -16,7 +16,6 @@ const AuthLinks = () => {
   const { user, error, isLoading } = useUser();
   if (isLoading) return <SkeletonCircle size='12' />;
   if (error) return <div>{error.message}</div>;
-  console.log(user);
 
   return (
     <Menu>

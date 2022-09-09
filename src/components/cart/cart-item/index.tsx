@@ -8,14 +8,13 @@ import {
   Flex,
   Button,
   HStack,
-  BoxProps,
   Badge,
   useNumberInput,
   Input,
   Tooltip,
 } from '@chakra-ui/react';
-import { addToCart, selectAllDataFromStore } from 'src/redux/slices/cartSlice';
-import { useSelector, useDispatch } from 'react-redux';
+
+import { useDispatch } from 'react-redux';
 import {
   decrementQuantity,
   incrementQuantity,
@@ -25,15 +24,10 @@ import {
 import NextLink from 'next/link';
 import { CloseButton } from '@chakra-ui/react';
 
-import { motion, Variants, AnimatePresence } from 'framer-motion';
-
 import { insertDecimal } from '@/utils/insertDecimal';
 import useGetItemDetails from '@/utils/useGetItemDetails';
-const MotionBox = motion<BoxProps>(Box);
 
 const CartComponent = ({ item }) => {
-  // const selectProducts = useSelector(selectAllDataFromStore);
-  // console.log(selectIdOfTheProduct);
   const dispatch = useDispatch();
 
   // calc price start
@@ -135,15 +129,6 @@ const CartComponent = ({ item }) => {
             </Text>
           </Box>
 
-          {/* <Button
-            colorScheme={'red'}
-            onClick={() => dispatch(removeItem(item))}
-            rounded='xl'
-            size='sm'
-            fontWeight={800}
-          >
-            X
-          </Button> */}
           <CloseButton
             onClick={() => dispatch(removeItem(item))}
             colorScheme='red'

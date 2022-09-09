@@ -38,7 +38,7 @@ interface productsArray {
 
 const StockManager = (cart) => {
   //-------------------------------
-  const checkProducts = async (theID, stockChange) => {
+  const checkProducts = async (theID: string, stockChange: number) => {
     console.log('stockChange is:', stockChange);
     const itemFromCart = await hygraphClient.request(GetProductById, {
       id: theID,

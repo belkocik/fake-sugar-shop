@@ -15,13 +15,9 @@ import {
 } from '@chakra-ui/react';
 import { FiShoppingBag } from 'react-icons/fi';
 import { SugarProductSchema } from '@/types/sugar-product-schema';
-
 import NextLink from 'next/link';
-// import toast, { Toaster } from 'react-hot-toast';
-import { useSelector, useDispatch } from 'react-redux';
-// import { decrement, increment, selectValue } from 'src/redux/slices/cartSlice';
-import { addToCart, selectAllDataFromStore } from 'src/redux/slices/cartSlice';
-import { insertDecimal } from '@/utils/insertDecimal';
+import { useDispatch } from 'react-redux';
+import { addToCart } from 'src/redux/slices/cartSlice';
 import useGetItemDetails from '@/utils/useGetItemDetails';
 
 export const ProductCard = ({
@@ -37,22 +33,7 @@ export const ProductCard = ({
   discountValue,
   isNewProduct,
 }: SugarProductSchema) => {
-  // const count = useSelector(selectValue);
-  // const dispatch = useDispatch();
-  // console.log(title);
-
-  // const selectIdOfTheProduct = useSelector(selectAllDataFromStore);
-  // console.log(selectIdOfTheProduct);
   const dispatch = useDispatch();
-  // const handleAddToCart = (id, title) => {
-  //   dispatch(
-  //     addToCart({ id, title, brand, coverImage, stock, price, quantity })
-  //   );
-  //   console.log(id);
-  //   // toast.success('Dodano produkt do koszyka');
-  // };
-
-  // const discountPrice = insertDecimal(price - price * (discountValue / 100));
 
   const { discountPrice } = useGetItemDetails(price, discountValue);
 
@@ -181,7 +162,6 @@ export const ProductCard = ({
                   w={6}
                   h={6}
                   cursor='pointer'
-                  // onClick={() => handleAddToCart(id, title)}
                   onClick={() =>
                     dispatch(
                       addToCart({

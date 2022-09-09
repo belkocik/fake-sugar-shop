@@ -2,94 +2,32 @@ import PageLayout from '@/components/page-layout';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   VStack,
-  Text,
-  Image,
   Box,
   Flex,
   Heading,
-  HStack,
-  Link,
-  Stack,
   Button,
   BoxProps,
   Divider,
   Center,
 } from '@chakra-ui/react';
 import { selectAllDataFromStore } from 'src/redux/slices/cartSlice';
-import {
-  decrementQuantity,
-  incrementQuantity,
-  removeItem,
-  clearCart,
-} from 'src/redux/slices/cartSlice';
+import { clearCart } from 'src/redux/slices/cartSlice';
 import CartComponent from '@/components/cart/cart-item';
-import {
-  motion,
-  Variants,
-  AnimatePresence,
-  AnimateSharedLayout,
-  LayoutGroup,
-} from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 
 import NextLink from 'next/link';
-import { useState, useEffect } from 'react';
+
 import CartTotal from '@/components/cart/cart-total';
 import useGetCartTotal from '@/utils/useGetCartTotal';
-
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.5,
-    },
-  },
-};
-
-const children = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1 },
-};
 
 const MotionBox = motion<BoxProps>(Box);
 
 const Cart = () => {
-  // const [loading, setIsLoading] = useState(true);
-  // useEffect(() => {
-  //   setIsLoading(false);
-  // }, []);
-
   const selectProducts = useSelector(selectAllDataFromStore);
   const dispatch = useDispatch();
-  console.log('cart select products', selectProducts);
-  // ------------- calc total amount start ------------------------
-  // let shipping = 10;
-  // const allItemsSubtotals = [];
-  // !loading &&
-  //   selectProducts.length &&
-  //   selectProducts.map((item) => {
-  //     const subtotal = item.isOnDiscount
-  //       ? item.price * item.quantity -
-  //         item.price * item.quantity * (item.discountValue / 100)
-  //       : item.price * item.quantity;
-  //     allItemsSubtotals.push(subtotal);
-  //   });
-
-  // const initialAmount = 0;
-  // const allSubtotals = allItemsSubtotals.reduce(
-  //   (previousAmount, currentAmount) => previousAmount + currentAmount,
-  //   initialAmount
-  // );
-  // const total = Math.round((allSubtotals + Number.EPSILON) * 100) / 100;
-  // total > 0 ? (shipping = 10) : (shipping = 0);
-
-  // console.log('total amount:', total);
-  // ------------- calc total amount end ------------------------
 
   const { shipping, total } = useGetCartTotal(selectProducts);
-  console.log('total:', total);
-  console.log('shipping:', shipping);
 
   return (
     <>

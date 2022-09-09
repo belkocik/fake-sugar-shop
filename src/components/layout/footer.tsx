@@ -6,14 +6,14 @@ const Footer = () => {
       align='center'
       opacity={{ base: '0.6', lg: '0.7' }}
       fontSize='sm'
-      // pt={10}
-      // pb={4}
       as='footer'
-      py={{ base: '36', md: '6' }}
+      pt={{ base: '36', md: '6' }}
+      pb={6}
     >
       <Box>
         &copy; {new Date().getFullYear()} sklep internetowy drogi-cukier
       </Box>
+
       <Box>
         Built with{' '}
         <Box as='span' color='red'>
@@ -28,9 +28,6 @@ const Footer = () => {
           _focus={{
             WebkitTapHighlightColor: 'transparent',
           }}
-          // _hover={{
-          //   color: "orange.400",
-          // }}
           _after={{
             content: `""`,
             position: 'absolute',

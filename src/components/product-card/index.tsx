@@ -12,6 +12,7 @@ import {
   Flex,
   Link,
   Badge,
+  Skeleton,
 } from '@chakra-ui/react';
 import { FiShoppingBag } from 'react-icons/fi';
 import { SugarProductSchema } from '@/types/sugar-product-schema';
@@ -80,6 +81,8 @@ export const ProductCard = ({
             objectFit={'cover'}
             src={coverImage.url}
             alt={title}
+            loading='lazy'
+            onLoad={() => <Skeleton height='230px' />}
           />
           {isOnDiscount && isNewProduct ? (
             <Flex

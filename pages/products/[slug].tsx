@@ -28,7 +28,6 @@ import { addToCart } from 'src/redux/slices/cartSlice';
 import useGetItemDetails from '@/utils/useGetItemDetails';
 
 const Image = chakra(NextImage, {
-  baseStyle: { maxH: 120, maxW: 120 },
   shouldForwardProp: (prop) =>
     [
       'width',
@@ -129,7 +128,7 @@ const ProductSlugPage = ({ product }) => {
               src={coverImage.url}
               width={1200}
               height={700}
-              quality={10}
+              quality={50}
               rounded='lg'
               placeholder='blur'
               blurDataURL={coverImage.url}

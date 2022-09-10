@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://ts-next-chakra-motion-kit.vercel.app/
+Host: https://drogi-cukier.vercel.app/
 
 # Sitemaps
-Sitemap: https://ts-next-chakra-motion-kit.vercel.app/sitemap.xml
+Sitemap: https://drogi-cukier.vercel.app/sitemap.xml

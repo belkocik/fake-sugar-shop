@@ -24,6 +24,7 @@ const CartTotal = ({ total, shipping }) => {
         <Text>Suma</Text>
         <Text fontWeight={500}>{finalPrice}PLN</Text>
       </HStack>
+
       {user && !user.email_verified ? (
         <Button
           mt={4}
@@ -31,6 +32,7 @@ const CartTotal = ({ total, shipping }) => {
           rightIcon={<FaArrowRight />}
           size='lg'
           disabled={true}
+          fontSize={{ base: 'sm', lg: 'lg' }}
         >
           Zweryfikuj swój e-mail aby kontynuować
         </Button>

@@ -114,7 +114,14 @@ const CartComponent = ({ item }) => {
             <Button {...inc} onClick={() => dispatch(incrementQuantity(item))}>
               +
             </Button>
-            <Input {...input} w='80px' textAlign='center' />
+            <Input
+              {...input}
+              w='80px'
+              textAlign='center'
+              color='black'
+              fontWeight={900}
+              disabled={true}
+            />
             <Button
               {...dec}
               onClick={() => dispatch(decrementQuantity(item.id))}

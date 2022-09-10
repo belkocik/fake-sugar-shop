@@ -1,4 +1,3 @@
-// import hygraph from './graphqlRequestClient';
 import { GraphQLClient, gql } from 'graphql-request';
 
 const hygraphClient = new GraphQLClient(

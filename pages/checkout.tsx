@@ -18,7 +18,11 @@ const Checkout = () => {
     if (!user.email_verified) {
       router.push('/');
     }
+  } else {
+    // if !user
+    router.push('/');
   }
+
   //
 
   return (

@@ -63,27 +63,13 @@ const ProductSlugPage = ({ product }) => {
     <PageLayout title='Slug page' description={`xd`}>
       <Flex
         direction={{ base: 'column' }}
-        bg='gray.50'
-        p={6}
+        bg={{ base: 'white', lg: 'gray.50' }}
+        p={{ base: 2, lg: 6 }}
         rounded='lg'
         w='100%'
         textAlign='left'
         align='center'
       >
-        <Box>
-          <Image
-            src={coverImage.url}
-            width={700}
-            height={500}
-            quality={10}
-            rounded='lg'
-            placeholder='blur'
-            blurDataURL={coverImage.url}
-            alt={title}
-            objectFit='fill'
-          />
-        </Box>
-
         <Box p={6}>
           <Stack
             align={{ base: 'left', lg: 'center' }}
@@ -126,7 +112,8 @@ const ProductSlugPage = ({ product }) => {
                 </HStack>
               </Box>
             </Box>
-            <Stack fontWeight={700} p={6}>
+
+            <Stack fontWeight={700} p={{ base: 0, md: 6 }}>
               <Text
                 color={'gray.500'}
                 fontSize={'sm'}
@@ -137,6 +124,19 @@ const ProductSlugPage = ({ product }) => {
               <Text color='blue.400'>Dostępność: {stock}</Text>
             </Stack>
           </Stack>
+          <Box mb={4}>
+            <Image
+              src={coverImage.url}
+              width={1200}
+              height={700}
+              quality={10}
+              rounded='lg'
+              placeholder='blur'
+              blurDataURL={coverImage.url}
+              alt={title}
+              objectFit='fill'
+            />
+          </Box>
 
           <RichText
             content={description.raw}

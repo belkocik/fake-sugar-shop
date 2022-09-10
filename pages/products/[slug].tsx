@@ -10,15 +10,12 @@ import {
   Badge,
   HStack,
   Stack,
-  Divider,
   chakra,
 } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { gql } from 'graphql-request';
 import { RichText } from '@graphcms/rich-text-react-renderer';
-
 import PageLayout from '@/components/page-layout';
-
 import hygraph from '@/utils/graphqlRequestClient';
 import { FiShoppingBag } from 'react-icons/fi';
 import { useDispatch } from 'react-redux';
@@ -44,6 +41,7 @@ const ProductSlugPage = ({ product }) => {
   const {
     id,
     title,
+    subtitle,
     brand,
     description,
     coverImage,
@@ -59,7 +57,7 @@ const ProductSlugPage = ({ product }) => {
   const { discountPrice } = useGetItemDetails(price, discountValue);
 
   return (
-    <PageLayout title='Slug page' description={`xd`}>
+    <PageLayout title={title} description={subtitle}>
       <Flex
         direction={{ base: 'column' }}
         bg={{ base: 'white', lg: 'gray.50' }}
@@ -238,6 +236,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         isNewProduct
         discountValue
         stock
+        subtitle
       }
     }
   `;

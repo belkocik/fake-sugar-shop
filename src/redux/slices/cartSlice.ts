@@ -36,13 +36,18 @@ const cartSlice = createSlice({
       if (itemInCart) {
         if (itemInCart.quantity + 1 > itemInCart.stock) {
           itemInCart.stock;
+          toast.error(
+            `Nie można dodać produktu. Nie ma wystarczającej ilości ${item.title} na stanie magazynu.`,
+            { duration: 5000 }
+          );
         } else {
           itemInCart.quantity++;
+          toast.success(`Dodano ${item.title} do koszyka`);
         }
       } else {
         state.cart.push({ ...action.payload, quantity: 1 });
+        toast.success(`Dodano ${item.title} do koszyka`);
       }
-      toast.success(`Dodano ${item.title} do koszyka`);
     },
     incrementQuantity: (state, action) => {
       const item = action.payload;

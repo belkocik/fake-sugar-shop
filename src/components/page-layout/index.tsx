@@ -39,26 +39,10 @@ const PageLayout = ({ title, description, children }: PageProps) => {
         title={title + ' | drogi-cukier sklep internetowy'}
         description={description}
         openGraph={{
-          // url: 'https://www.hakkaofdev.fr',
           title: title + ' | drogi-cukier sklep internetowy',
           description: description,
           locale: 'pl_PL',
-          // images: [
-          //   {
-          //     url: 'https://www.hakkaofdev.fr/assets/images/social.png',
-          //     width: 1200,
-          //     height: 630,
-          //     alt: 'Alexandre Gossard',
-          //     type: 'image/png',
-          //   },
-          // ],
         }}
-        // additionalLinkTags={[
-        //   {
-        //     rel: 'icon',
-        //     href: 'https://www.hakkaofdev.fr/favicon.ico',
-        //   },
-        // ]}
       />
       <MotionContainer
         display='flex'

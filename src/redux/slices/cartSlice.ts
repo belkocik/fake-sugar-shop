@@ -34,7 +34,11 @@ const cartSlice = createSlice({
       ); // if the item in cart is the same
       const item = action.payload;
       if (itemInCart) {
-        itemInCart.quantity++;
+        if (itemInCart.quantity + 1 > itemInCart.stock) {
+          itemInCart.stock;
+        } else {
+          itemInCart.quantity++;
+        }
       } else {
         state.cart.push({ ...action.payload, quantity: 1 });
       }

@@ -5,6 +5,9 @@ export default handleAuth({
     try {
       await handleLogin(req, res, {
         authorizationParams: {
+          //   audience: 'gateway.dev.abcdDomain.com',
+          // Add the `offline_access` scope to also get a Refresh Token
+          //   scope: 'openid profile email offline_access', // or AUTH0_SCOPE
           useRefreshTokens: true,
         },
       });

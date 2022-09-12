@@ -4,15 +4,15 @@ import toast from 'react-hot-toast';
 
 interface CartState {
   title: string;
-  brand?: string;
-  price?: number;
-  coverImage?: string;
+  brand: string;
+  price: number;
+  coverImage: string;
   id: string;
-  slug?: string;
+  slug: string;
   stock: number;
-  isOnDiscount?: boolean;
-  discountValue?: number;
-  quantity?: number;
+  isOnDiscount: boolean;
+  discountValue: number;
+  quantity: number;
 }
 
 interface CartStateData {

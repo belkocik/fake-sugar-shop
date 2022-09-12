@@ -82,6 +82,7 @@ export const ProductCard = ({
             src={coverImage.url}
             alt={title}
             loading='lazy'
+            fallbackSrc='https://via.placeholder.com/230'
             onLoad={() => <Skeleton height='230px' />}
           />
           {isOnDiscount && isNewProduct ? (

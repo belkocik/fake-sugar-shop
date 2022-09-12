@@ -76,13 +76,13 @@ export const ProductCard = ({
         >
           <Image
             rounded={'lg'}
-            height={230}
             width={282}
+            height={230}
             objectFit={'cover'}
             src={coverImage.url}
             alt={title}
             loading='lazy'
-            fallbackSrc='https://via.placeholder.com/230'
+            fallbackSrc='https://via.placeholder.com/282x230'
             onLoad={() => <Skeleton height='230px' />}
           />
           {isOnDiscount && isNewProduct ? (

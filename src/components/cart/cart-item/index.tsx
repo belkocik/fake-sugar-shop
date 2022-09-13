@@ -67,7 +67,7 @@ const CartComponent = ({ item }) => {
               <Tooltip
                 label='Zobacz produkt'
                 fontSize='md'
-                bg='gray.50'
+                bg='gray.100'
                 hasArrow
                 placement='bottom'
                 aria-label='A tooltip'

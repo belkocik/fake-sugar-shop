@@ -126,7 +126,7 @@ export const ProductCard = ({
               <Tooltip
                 label='Wyświetl produkt'
                 fontSize='md'
-                bg='gray.50'
+                bg='gray.100'
                 hasArrow
                 placement='top'
               >
@@ -157,43 +157,17 @@ export const ProductCard = ({
             )}
 
             <Tooltip
-              label='Dodaj do koszyka'
+              label={`${stock === 0 ? 'Brak w magazynie' : 'Dodaj do koszyka'}`}
               fontSize='md'
-              bg='gray.50'
+              bg='gray.100'
               hasArrow
             >
               <Flex as='span' textAlign='center'>
-                {/* <Icon
-                    as={FiShoppingBag}
-                    w={6}
-                    h={6}
-                    cursor='pointer'
-                    onClick={() =>
-                      dispatch(
-                        addToCart({
-                          id,
-                          title,
-                          brand,
-                          coverImage,
-                          stock,
-                          price,
-                          quantity,
-                          slug,
-                          isOnDiscount,
-                          isNewProduct,
-                          discountValue,
-                        })
-                      )
-                    }
-                  /> */}
                 <IconButton
-                  // disabled={true}
+                  disabled={stock === 0 ? true : false}
                   aria-label='add a product to a cart'
                   icon={<FiShoppingBag size='24' />}
                   bg='white'
-                  _hover={{
-                    bg: 'white',
-                  }}
                   cursor='pointer'
                   onClick={() =>
                     dispatch(

@@ -3,7 +3,6 @@ import {
   Heading,
   Flex,
   Text,
-  Icon,
   Tooltip,
   Spacer,
   Button,
@@ -11,6 +10,7 @@ import {
   HStack,
   Stack,
   chakra,
+  IconButton,
 } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { gql } from 'graphql-request';
@@ -171,20 +171,21 @@ const ProductSlugPage = ({ product }) => {
         <Spacer />
         <Box>
           <HStack>
-            <Text mb={1} fontWeight={800} fontSize={'xl'}>
+            <Text fontWeight={800} fontSize={'xl'}>
               {isOnDiscount ? discountPrice : price}PLN
             </Text>
             <Tooltip
-              label='Dodaj do koszyka'
+              label={`${stock === 0 ? 'Brak w magazynie' : 'Dodaj do koszyka'}`}
               fontSize='md'
-              bg='gray.50'
+              bg='gray.100'
               hasArrow
             >
               <Box as='span' textAlign='center'>
-                <Icon
-                  as={FiShoppingBag}
-                  w={8}
-                  h={8}
+                <IconButton
+                  disabled={stock === 0 ? true : false}
+                  aria-label='add a product to a cart'
+                  icon={<FiShoppingBag size='24' />}
+                  bg='white'
                   cursor='pointer'
                   onClick={() =>
                     dispatch(

@@ -9,18 +9,36 @@ import {
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { insertDecimal } from '@/utils/insertDecimal';
-// import { useUser } from '@auth0/nextjs-auth0';
+import { useUser } from '@auth0/nextjs-auth0';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { toast } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { clearCart } from 'src/redux/slices/cartSlice';
 import NextLink from 'next/link';
 import StockManager from '@/utils/StockManager';
+import { GraphQLClient, gql } from 'graphql-request';
+import { nanoid } from '@reduxjs/toolkit';
+
+const hygraphClient = new GraphQLClient(
+  process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT,
+  {
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_GRAPHCMS_TOKEN}`,
+    },
+  }
+);
 
 const CheckoutComp = ({ total, shipping, cart }) => {
   const [paymentOk, setPaymentOk] = useState(``);
   const [updateStock, setUpdateStock] = useState(false);
-  // const { user } = useUser();
+  const { user } = useUser();
+  console.log(user);
+  console.log('checkout cart', cart);
+
+  const test = cart.map((item) => {
+    return item.quantity;
+  });
+  console.log('test', test);
   const finalPrice = insertDecimal(total + shipping);
   console.log('final price in checkout', finalPrice);
   console.log('stock manager cart:', cart);
@@ -89,10 +107,22 @@ const CheckoutComp = ({ total, shipping, cart }) => {
                     actions.order
                       .capture()
                       // .then(setUpdateStock(true))
+                      // .then(createOrders())
                       .then((details) => {
                         // const name = details.payer.name.given_name;
                         // alert(`Transaction completed by ${name}`);
                         setUpdateStock(true);
+                        const createOrders = hygraphClient.request(
+                          CreateOrder,
+                          {
+                            userId: user.email,
+                            totalPrice: finalPrice,
+                            quantity: test,
+                            title: [`Zamówienie: ${nanoid()}`],
+                            date: new Date(),
+                          }
+                        );
+
                         setPaymentOk(`Transakcja przebiegła pomyślnie.`);
                         toast.success(`Transakcja przebiegła pomyślnie.`, {
                           duration: 10000,
@@ -134,3 +164,29 @@ const CheckoutComp = ({ total, shipping, cart }) => {
 };
 
 export default CheckoutComp;
+
+const CreateOrder = gql`
+  mutation CreateOrder(
+    $userId: String
+    $totalPrice: Float
+    $quantity: [Int!]
+    $title: [String!]
+    $date: Date
+  ) {
+    createOrder(
+      data: {
+        userId: $userId
+        totalPrice: $totalPrice
+        quantity: $quantity
+        title: $title
+        date: $date
+      }
+    ) {
+      totalPrice
+      userId
+      title
+      quantity
+      date
+    }
+  }
+`;

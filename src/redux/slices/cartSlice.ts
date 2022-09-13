@@ -34,16 +34,21 @@ const cartSlice = createSlice({
       ); // if the item in cart is the same
       const item = action.payload;
       if (itemInCart) {
-        if (itemInCart.quantity + 1 > itemInCart.stock) {
-          itemInCart.stock;
+        if (itemInCart.quantity >= itemInCart.stock) {
           toast.error(
             `Nie można dodać produktu. Nie ma wystarczającej ilości ${item.title} na stanie magazynu.`,
             { duration: 5000 }
           );
+          itemInCart.stock;
         } else {
           itemInCart.quantity++;
           toast.success(`Dodano ${item.title} do koszyka`);
         }
+      } else if (item.stock === 0) {
+        toast.error(
+          `Nie można dodać produktu. Nie ma wystarczającej ilości ${item.title} na stanie magazynu.`,
+          { duration: 5000 }
+        );
       } else {
         state.cart.push({ ...action.payload, quantity: 1 });
         toast.success(`Dodano ${item.title} do koszyka`);

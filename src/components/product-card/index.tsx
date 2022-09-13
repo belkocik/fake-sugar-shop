@@ -13,6 +13,7 @@ import {
   Link,
   Badge,
   Skeleton,
+  IconButton,
 } from '@chakra-ui/react';
 import { FiShoppingBag } from 'react-icons/fi';
 import { SugarProductSchema } from '@/types/sugar-product-schema';
@@ -162,10 +163,37 @@ export const ProductCard = ({
               hasArrow
             >
               <Flex as='span' textAlign='center'>
-                <Icon
-                  as={FiShoppingBag}
-                  w={6}
-                  h={6}
+                {/* <Icon
+                    as={FiShoppingBag}
+                    w={6}
+                    h={6}
+                    cursor='pointer'
+                    onClick={() =>
+                      dispatch(
+                        addToCart({
+                          id,
+                          title,
+                          brand,
+                          coverImage,
+                          stock,
+                          price,
+                          quantity,
+                          slug,
+                          isOnDiscount,
+                          isNewProduct,
+                          discountValue,
+                        })
+                      )
+                    }
+                  /> */}
+                <IconButton
+                  // disabled={true}
+                  aria-label='add a product to a cart'
+                  icon={<FiShoppingBag size='24' />}
+                  bg='white'
+                  _hover={{
+                    bg: 'white',
+                  }}
                   cursor='pointer'
                   onClick={() =>
                     dispatch(

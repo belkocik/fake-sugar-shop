@@ -35,10 +35,16 @@ const CheckoutComp = ({ total, shipping, cart }) => {
   console.log(user);
   console.log('checkout cart', cart);
 
-  const test = cart.map((item) => {
+  const qtest = cart.map((item) => {
     return item.quantity;
   });
-  console.log('test', test);
+
+  console.log('quantity test:', qtest);
+
+  const titleTest = cart.map((item) => {
+    return item.title;
+  });
+  console.log('title test:', titleTest);
   const finalPrice = insertDecimal(total + shipping);
   console.log('final price in checkout', finalPrice);
   console.log('stock manager cart:', cart);
@@ -103,36 +109,26 @@ const CheckoutComp = ({ total, shipping, cart }) => {
                   });
                 }}
                 onApprove={(data, actions) => {
-                  return (
-                    actions.order
-                      .capture()
-                      // .then(setUpdateStock(true))
-                      // .then(createOrders())
-                      .then((details) => {
-                        // const name = details.payer.name.given_name;
-                        // alert(`Transaction completed by ${name}`);
-                        setUpdateStock(true);
-                        const createOrders = hygraphClient.request(
-                          CreateOrder,
-                          {
-                            userId: user.email,
-                            totalPrice: finalPrice,
-                            quantity: test,
-                            title: [`Zamówienie: ${nanoid()}`],
-                            date: new Date(),
-                          }
-                        );
+                  return actions.order.capture().then((details) => {
+                    setUpdateStock(true);
+                    const createOrders = hygraphClient.request(CreateOrder, {
+                      userId: user.nickname,
+                      totalPrice: finalPrice,
+                      quantity: qtest,
+                      orderTitle: `Zamówienie: ${nanoid()}`,
+                      date: new Date(),
+                      productTitle: titleTest,
+                    });
 
-                        setPaymentOk(`Transakcja przebiegła pomyślnie.`);
-                        toast.success(`Transakcja przebiegła pomyślnie.`, {
-                          duration: 10000,
-                          position: 'top-center',
-                        });
-                        if (typeof window !== 'undefined') {
-                          window.scrollTo({ top: 0, behavior: 'smooth' });
-                        }
-                      })
-                  );
+                    setPaymentOk(`Transakcja przebiegła pomyślnie.`);
+                    toast.success(`Transakcja przebiegła pomyślnie.`, {
+                      duration: 10000,
+                      position: 'top-center',
+                    });
+                    if (typeof window !== 'undefined') {
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                  });
                 }}
               />
             </PayPalScriptProvider>
@@ -170,23 +166,26 @@ const CreateOrder = gql`
     $userId: String
     $totalPrice: Float
     $quantity: [Int!]
-    $title: [String!]
+    $orderTitle: String
     $date: Date
+    $productTitle: [String!]
   ) {
     createOrder(
       data: {
         userId: $userId
         totalPrice: $totalPrice
         quantity: $quantity
-        title: $title
+        orderTitle: $orderTitle
         date: $date
+        productTitle: $productTitle
       }
     ) {
-      totalPrice
       userId
-      title
+      totalPrice
       quantity
+      orderTitle
       date
+      productTitle
     }
   }
 `;

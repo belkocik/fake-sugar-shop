@@ -8,10 +8,15 @@ import { store, persistor } from '../src/redux/store';
 import { Provider } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
 import { PersistGate } from 'redux-persist/integration/react';
-import { UserProvider } from '@auth0/nextjs-auth0';
+import { UserProvider, Session } from '@auth0/nextjs-auth0';
 import NextNProgress from 'nextjs-progressbar';
 
-const App = ({ Component, pageProps }: AppProps) => {
+const App = ({
+  Component,
+  pageProps,
+}: AppProps<{
+  session: Session;
+}>) => {
   const { user } = pageProps;
 
   return (

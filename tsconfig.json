@@ -21,7 +21,6 @@
       "@/data/*": ["data/*"],
       "@/theme": ["src/theme"]
     },
-    "typeRoots": ["./src/@types", "./node_modules/@types"],
     "incremental": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/404.tsx"],

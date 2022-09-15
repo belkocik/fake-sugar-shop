@@ -1,5 +1,5 @@
 import PageLayout from '@/components/page-layout';
-import { Box, Heading, Text, HStack } from '@chakra-ui/react';
+import { Box, Heading, Text, HStack, Badge } from '@chakra-ui/react';
 import React from 'react';
 import { GetServerSideProps } from 'next';
 import hygraph from '@/utils/graphqlRequestClient';
@@ -38,6 +38,10 @@ const Profile = ({ order }) => {
           <Heading as='h2' fontSize='2xl' pt={4}>
             Oto twoje zamowienia
           </Heading>
+          <Badge colorScheme='blue' fontSize='14px'>
+            Zamówienie pojawi się tutaj jak zostanie zaakceptowane przez
+            pracownika
+          </Badge>
 
           {order.map((item) => (
             <Box key={item.orderTitle}>

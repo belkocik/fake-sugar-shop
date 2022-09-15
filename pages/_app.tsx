@@ -13,6 +13,7 @@ import NextNProgress from 'nextjs-progressbar';
 
 const App = ({ Component, pageProps }: AppProps) => {
   const { user } = pageProps;
+
   return (
     <ChakraProvider theme={theme}>
       <UserProvider user={user}>

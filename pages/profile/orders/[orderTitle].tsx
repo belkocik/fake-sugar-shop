@@ -13,7 +13,7 @@ import hygraph from '@/utils/graphqlRequestClient';
 import { GetServerSideProps } from 'next';
 import OrderDetailsCard from '@/components/order-details-card';
 import NextLink from 'next/link';
-import { useUser } from '@auth0/nextjs-auth0';
+import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { useRouter } from 'next/router';
 
 const OrderDetails = ({ orderDetails }) => {
@@ -34,7 +34,7 @@ const OrderDetails = ({ orderDetails }) => {
 
   const router = useRouter();
 
-  // route protection
+  // additional route protection
   if (user) {
     if (!user.email_verified) {
       router.push('/');
@@ -87,29 +87,31 @@ const OrderDetails = ({ orderDetails }) => {
 
 export default OrderDetails;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const currentOrder = context.params.orderTitle;
-  console.log('context', currentOrder);
+export const getServerSideProps: GetServerSideProps = withPageAuthRequired({
+  async getServerSideProps(context) {
+    const currentOrder = context.params.orderTitle;
+    console.log('context', currentOrder);
 
-  const query = gql`
-    query ($currentOrder: String!) {
-      orders(where: { orderTitle: $currentOrder }) {
-        userId
-        orderTitle
-        productTitle
-        quantity
-        totalPrice
-        date
-        imageUrl
+    const query = gql`
+      query ($currentOrder: String!) {
+        orders(where: { orderTitle: $currentOrder }) {
+          userId
+          orderTitle
+          productTitle
+          quantity
+          totalPrice
+          date
+          imageUrl
+        }
       }
-    }
-  `;
-  const variables = { currentOrder };
-  const order = await hygraph.request(query, variables);
+    `;
+    const variables = { currentOrder };
+    const order = await hygraph.request(query, variables);
 
-  return {
-    props: {
-      orderDetails: order.orders[0],
-    },
-  };
-};
+    return {
+      props: {
+        orderDetails: order.orders[0],
+      },
+    };
+  },
+});

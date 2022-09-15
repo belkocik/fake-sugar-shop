@@ -15,7 +15,7 @@ import { GetServerSideProps } from 'next';
 import hygraph from '@/utils/graphqlRequestClient';
 import { gql } from 'graphql-request';
 import NextLink from 'next/link';
-import { useUser } from '@auth0/nextjs-auth0';
+import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { useRouter } from 'next/router';
 import { toast } from 'react-hot-toast';
 
@@ -27,7 +27,7 @@ const Profile = ({ order }) => {
 
   const router = useRouter();
 
-  // route protection
+  // additional route protection
   if (user) {
     if (!user.email_verified) {
       router.push('/');
@@ -106,24 +106,26 @@ const Profile = ({ order }) => {
 
 export default Profile;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const currentUser = context.params.userId;
+export const getServerSideProps: GetServerSideProps = withPageAuthRequired({
+  async getServerSideProps(context) {
+    const currentUser = context.params.userId;
 
-  const query = gql`
-    query ($currentUser: String!) {
-      orders(where: { userId: $currentUser }) {
-        userId
-        orderTitle
-        date
+    const query = gql`
+      query ($currentUser: String!) {
+        orders(where: { userId: $currentUser }) {
+          userId
+          orderTitle
+          date
+        }
       }
-    }
-  `;
-  const variables = { currentUser };
-  const order = await hygraph.request(query, variables);
+    `;
+    const variables = { currentUser };
+    const order = await hygraph.request(query, variables);
 
-  return {
-    props: {
-      order: order.orders,
-    },
-  };
-};
+    return {
+      props: {
+        order: order.orders,
+      },
+    };
+  },
+});

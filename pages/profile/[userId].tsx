@@ -7,17 +7,7 @@ import { gql } from 'graphql-request';
 import NextLink from 'next/link';
 
 const Profile = ({ order }) => {
-  console.log(order);
-
-  const productTitles = order.map((item) => item.productTitle);
-  const productQuantity = order.map((item) => item.quantity);
-  console.log('product titles', productTitles);
-  console.log('product quantities', productQuantity);
-
   const username = order[0].userId;
-
-  const orderTitles = order.map((order) => order.orderTitle);
-  console.log('order titles', orderTitles);
 
   const dateFormat = (date) => {
     const [year, month, day] = date.split('-');
@@ -25,7 +15,10 @@ const Profile = ({ order }) => {
   };
 
   return (
-    <PageLayout title='profile' description='profile dsc'>
+    <PageLayout
+      title='Profil użytkownika'
+      description='Profil użytkownika gdzie znajdują się informacje na temat zamówień.'
+    >
       <Box py={8}>
         <Heading>
           Cześć{' '}
@@ -36,7 +29,7 @@ const Profile = ({ order }) => {
         </Heading>
         <Box>
           <Heading as='h2' fontSize='2xl' pt={4}>
-            Oto twoje zamowienia
+            Oto twoje zamówienia
           </Heading>
           <Badge colorScheme='blue' fontSize='14px'>
             Zamówienie pojawi się tutaj jak zostanie zaakceptowane przez

@@ -7,7 +7,6 @@ import { GetServerSideProps } from 'next';
 import OrderDetailsCard from '@/components/order-details-card';
 
 const OrderDetails = ({ orderDetails }) => {
-  console.log('order details', orderDetails);
   const productTitles = orderDetails.productTitle.map((item) => item);
   const productQuantity = orderDetails.quantity.map((item) => item);
   const productImageUrl = orderDetails.imageUrl.map((item) => item);
@@ -17,9 +16,12 @@ const OrderDetails = ({ orderDetails }) => {
     productQuantity[i],
     productImageUrl[i],
   ]);
-  console.log('merged in order details', merged);
+
   return (
-    <PageLayout title='order det' description='desc order'>
+    <PageLayout
+      title={`${orderDetails.orderTitle}`}
+      description='Zamówienie z wszystkimi informacjami na temat zakupionych produktów przez klienta.'
+    >
       <Box py={8}>
         <Heading as='h1'>{orderDetails.orderTitle}</Heading>
         <Box>

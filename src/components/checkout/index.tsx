@@ -32,28 +32,21 @@ const CheckoutComp = ({ total, shipping, cart }) => {
   const [paymentOk, setPaymentOk] = useState(``);
   const [updateStock, setUpdateStock] = useState(false);
   const { user } = useUser();
-  console.log(user);
-  console.log('checkout cart', cart);
 
   const quantityOfProducts = cart.map((item) => {
     return item.quantity;
   });
 
-  console.log('quantityOfProducts:', quantityOfProducts);
-
   const titlesOfProducts = cart.map((item) => {
     return item.title;
   });
-  console.log('titlesOfProducts:', titlesOfProducts);
 
   const ImageUrlsOfProducts = cart.map((item) => {
     return item.coverImage.url;
   });
-  console.log('ImageUrlsOfProducts:', ImageUrlsOfProducts);
 
   const finalPrice = insertDecimal(total + shipping);
-  console.log('final price in checkout', finalPrice);
-  console.log('stock manager cart:', cart);
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (updateStock) {
@@ -77,7 +70,6 @@ const CheckoutComp = ({ total, shipping, cart }) => {
       rounded='lg'
       textAlign='center'
     >
-      {/* <Heading as='h3'>Cześć, {user.nickname || ''}👋</Heading> */}
       <Heading as='h3'>💰💸👛🤑💲💳</Heading>
       {finalPrice !== 0 && finalPrice > 10 && (
         <Box>

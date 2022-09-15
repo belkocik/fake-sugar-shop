@@ -130,8 +130,8 @@ const ProductSlugPage = ({ product }) => {
               rounded='lg'
               placeholder='blur'
               blurDataURL={coverImage.url}
-              alt={title}
               objectFit='fill'
+              alt={title}
             />
           </Box>
 

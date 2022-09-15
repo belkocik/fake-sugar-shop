@@ -35,16 +35,22 @@ const CheckoutComp = ({ total, shipping, cart }) => {
   console.log(user);
   console.log('checkout cart', cart);
 
-  const qtest = cart.map((item) => {
+  const quantityOfProducts = cart.map((item) => {
     return item.quantity;
   });
 
-  console.log('quantity test:', qtest);
+  console.log('quantityOfProducts:', quantityOfProducts);
 
-  const titleTest = cart.map((item) => {
+  const titlesOfProducts = cart.map((item) => {
     return item.title;
   });
-  console.log('title test:', titleTest);
+  console.log('titlesOfProducts:', titlesOfProducts);
+
+  const ImageUrlsOfProducts = cart.map((item) => {
+    return item.coverImage.url;
+  });
+  console.log('ImageUrlsOfProducts:', ImageUrlsOfProducts);
+
   const finalPrice = insertDecimal(total + shipping);
   console.log('final price in checkout', finalPrice);
   console.log('stock manager cart:', cart);
@@ -114,10 +120,11 @@ const CheckoutComp = ({ total, shipping, cart }) => {
                     const createOrders = hygraphClient.request(CreateOrder, {
                       userId: user.nickname,
                       totalPrice: finalPrice,
-                      quantity: qtest,
+                      quantity: quantityOfProducts,
                       orderTitle: `Zamówienie: ${nanoid()}`,
                       date: new Date(),
-                      productTitle: titleTest,
+                      productTitle: titlesOfProducts,
+                      imageUrl: ImageUrlsOfProducts,
                     });
 
                     setPaymentOk(`Transakcja przebiegła pomyślnie.`);
@@ -169,6 +176,7 @@ const CreateOrder = gql`
     $orderTitle: String
     $date: Date
     $productTitle: [String!]
+    $imageUrl: [String!]
   ) {
     createOrder(
       data: {
@@ -178,6 +186,7 @@ const CreateOrder = gql`
         orderTitle: $orderTitle
         date: $date
         productTitle: $productTitle
+        imageUrl: $imageUrl
       }
     ) {
       userId
@@ -186,6 +195,7 @@ const CreateOrder = gql`
       orderTitle
       date
       productTitle
+      imageUrl
     }
   }
 `;

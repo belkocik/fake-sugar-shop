@@ -35,8 +35,8 @@ What I used to create this project?
 
 ### Test account:
 
-login: ukpwijgylccsskqgwq@nvhrw.com
-hasło: xk4s4gs6XsmLx2K
+- login: ukpwijgylccsskqgwq@nvhrw.com
+- hasło: xk4s4gs6XsmLx2K
 
 ### Live demo
 

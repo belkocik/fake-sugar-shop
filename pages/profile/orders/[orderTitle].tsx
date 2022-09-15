@@ -35,6 +35,7 @@ const OrderDetails = ({ orderDetails }) => {
               title={title}
               quantity={quantity}
               imageUrl={imageUrl}
+              key={title}
             />
           ))}
           <Text fontWeight={800} fontSize={'xl'} mt={2}>

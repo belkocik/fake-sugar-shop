@@ -28,6 +28,11 @@ What I used to create this project?
 ![alt text](https://media.graphassets.com/pE5FjqcgTkWOkn0qKSOr)
 ![alt text](https://media.graphassets.com/7EmAp9nSmOB9X3rbXpVa)
 
+### Order details
+
+![alt text](https://media.graphassets.com/PIudkWhjTNCQlLRq92bE)
+![alt text](https://media.graphassets.com/gW93U010QwatXnAkiegA)
+
 ### Live demo
 
 [https://drogi-cukier.vercel.app/](https://drogi-cukier.vercel.app/)

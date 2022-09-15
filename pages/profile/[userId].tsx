@@ -20,12 +20,11 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-hot-toast';
 
 const Profile = ({ order }) => {
+  const router = useRouter();
   const { user, error, isLoading } = useUser();
 
   if (isLoading) return <Spinner />;
   if (error) return <Text>{error.message}</Text>;
-
-  const router = useRouter();
 
   // additional route protection
   if (user) {

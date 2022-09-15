@@ -17,6 +17,7 @@ import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { useRouter } from 'next/router';
 
 const OrderDetails = ({ orderDetails }) => {
+  const router = useRouter();
   const productTitles = orderDetails.productTitle.map((item) => item);
   const productQuantity = orderDetails.quantity.map((item) => item);
   const productImageUrl = orderDetails.imageUrl.map((item) => item);
@@ -31,8 +32,6 @@ const OrderDetails = ({ orderDetails }) => {
 
   if (isLoading) return <Spinner />;
   if (error) return <Text>{error.message}</Text>;
-
-  const router = useRouter();
 
   // additional route protection
   if (user) {

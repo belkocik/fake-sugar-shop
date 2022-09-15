@@ -1,4 +1,5 @@
 import { Box, VStack, Link, useColorModeValue } from '@chakra-ui/react';
+import PageLayout from '../page-layout';
 
 const Footer = () => {
   return (

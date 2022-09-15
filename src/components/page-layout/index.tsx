@@ -55,6 +55,8 @@ const PageLayout = ({ title, description, children }: PageProps) => {
         variants={variants}
         centerContent
         mt={32}
+        position='relative'
+        minHeight='100vh'
       >
         {children}
       </MotionContainer>

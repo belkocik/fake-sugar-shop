@@ -12,10 +12,11 @@ import { UserProvider } from '@auth0/nextjs-auth0';
 import NextNProgress from 'nextjs-progressbar';
 
 const App = ({ Component, pageProps }: AppProps) => {
+  const { user } = pageProps;
   return (
     <ChakraProvider theme={theme}>
-      <Provider store={store}>
-        <UserProvider>
+      <UserProvider user={user}>
+        <Provider store={store}>
           <PersistGate persistor={persistor}>
             <Layout>
               <NextNProgress
@@ -27,8 +28,8 @@ const App = ({ Component, pageProps }: AppProps) => {
               <Component {...pageProps} />
             </Layout>
           </PersistGate>
-        </UserProvider>
-      </Provider>
+        </Provider>
+      </UserProvider>
     </ChakraProvider>
   );
 };

@@ -1,10 +1,11 @@
 import PageLayout from '@/components/page-layout';
-import { Box, Heading, Text, Progress } from '@chakra-ui/react';
+import { Box, Heading, Text, Progress, Button } from '@chakra-ui/react';
 import React from 'react';
 import { gql } from 'graphql-request';
 import hygraph from '@/utils/graphqlRequestClient';
 import { GetServerSideProps } from 'next';
 import OrderDetailsCard from '@/components/order-details-card';
+import NextLink from 'next/link';
 
 const OrderDetails = ({ orderDetails }) => {
   const productTitles = orderDetails.productTitle.map((item) => item);
@@ -44,6 +45,11 @@ const OrderDetails = ({ orderDetails }) => {
             Suma z dostawą: {orderDetails.totalPrice}PLN
           </Text>
         </Box>
+        <NextLink href={`/profile/${orderDetails.userId}`} passHref>
+          <Button colorScheme='gray' mt={2}>
+            Powróć do listy zamówień
+          </Button>
+        </NextLink>
       </Box>
     </PageLayout>
   );

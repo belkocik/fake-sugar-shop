@@ -1,5 +1,14 @@
 import PageLayout from '@/components/page-layout';
-import { Box, Heading, Text, HStack, Badge } from '@chakra-ui/react';
+import {
+  Box,
+  Heading,
+  Text,
+  HStack,
+  Flex,
+  Alert,
+  AlertIcon,
+  AlertDescription,
+} from '@chakra-ui/react';
 import React from 'react';
 import { GetServerSideProps } from 'next';
 import hygraph from '@/utils/graphqlRequestClient';
@@ -19,7 +28,7 @@ const Profile = ({ order }) => {
       title='Profil użytkownika'
       description='Profil użytkownika gdzie znajdują się informacje na temat zamówień.'
     >
-      <Box py={8}>
+      <Flex direction='column' py={8}>
         <Heading>
           Cześć{' '}
           <Box as='span' color='teal.400'>
@@ -31,33 +40,39 @@ const Profile = ({ order }) => {
           <Heading as='h2' fontSize='2xl' pt={4}>
             Oto twoje zamówienia
           </Heading>
-          <Badge colorScheme='blue' fontSize='14px'>
-            Zamówienie pojawi się tutaj jak zostanie zaakceptowane przez
-            pracownika
-          </Badge>
 
-          {order.map((item) => (
-            <Box key={item.orderTitle}>
-              <NextLink href={`/profile/orders/${item.orderTitle}`}>
-                <HStack
-                  bg='gray.50'
-                  p={6}
-                  m={4}
-                  justify='space-between'
-                  rounded='lg'
-                  cursor='pointer'
-                  _hover={{
-                    bg: 'gray.100',
-                  }}
-                >
-                  <Text>{item.orderTitle}</Text>
-                  <Text>{dateFormat(item.date)}</Text>
-                </HStack>
-              </NextLink>
-            </Box>
-          ))}
+          <Alert status='info' rounded='lg'>
+            <AlertIcon />
+
+            <AlertDescription>
+              Zamówienie pojawi się tutaj jak zostanie zaakceptowane przez
+              pracownika.
+            </AlertDescription>
+          </Alert>
+          <Box>
+            {order.map((item) => (
+              <Box key={item.orderTitle}>
+                <NextLink href={`/profile/orders/${item.orderTitle}`}>
+                  <HStack
+                    bg='gray.50'
+                    p={6}
+                    m={4}
+                    justify='space-between'
+                    rounded='lg'
+                    cursor='pointer'
+                    _hover={{
+                      bg: 'gray.100',
+                    }}
+                  >
+                    <Text>{item.orderTitle}</Text>
+                    <Text>{dateFormat(item.date)}</Text>
+                  </HStack>
+                </NextLink>
+              </Box>
+            ))}
+          </Box>
         </Box>
-      </Box>
+      </Flex>
     </PageLayout>
   );
 };

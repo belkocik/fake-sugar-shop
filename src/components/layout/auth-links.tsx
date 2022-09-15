@@ -11,13 +11,11 @@ import {
   SkeletonCircle,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
-// import { useRouter } from 'next/router';
 
 const AuthLinks = () => {
   const { user, error, isLoading } = useUser();
   if (isLoading) return <SkeletonCircle size='12' />;
   if (error) return <div>{error.message}</div>;
-  // const router = useRouter();
 
   return (
     <Menu>
@@ -31,17 +29,17 @@ const AuthLinks = () => {
       </MenuButton>
       <MenuList alignItems='center' minW='0' h='100%' p={0}>
         <Flex justify='center' direction='column'>
+          {user && (
+            <NextLink href={`/profile/${user.nickname}`} passHref>
+              <MenuItem as='a'>Zamówienia</MenuItem>
+            </NextLink>
+          )}
           <NextLink
             href={`${user ? '/api/auth/logout' : '/api/auth/login'}`}
             passHref
           >
             <MenuItem>{user ? 'Wyloguj się' : 'Zaloguj się'}</MenuItem>
           </NextLink>
-          {user && (
-            <NextLink href={`/profile/${user.nickname}`} passHref>
-              <MenuItem as='a'>Zamówienia</MenuItem>
-            </NextLink>
-          )}
         </Flex>
       </MenuList>
     </Menu>

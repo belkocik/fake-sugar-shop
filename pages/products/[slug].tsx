@@ -185,7 +185,7 @@ const ProductSlugPage = ({ product }) => {
                   disabled={stock === 0 ? true : false}
                   aria-label='add a product to a cart'
                   icon={<FiShoppingBag size='24' />}
-                  bg='white'
+                  bg='gray.50'
                   cursor='pointer'
                   onClick={() =>
                     dispatch(

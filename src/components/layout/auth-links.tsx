@@ -37,15 +37,11 @@ const AuthLinks = () => {
           >
             <MenuItem>{user ? 'Wyloguj się' : 'Zaloguj się'}</MenuItem>
           </NextLink>
-
-          {/* {user && (
-            <MenuItem onClick={() => router.push(`/profile/${user.nickname}`)}>
-              Zamówienia
-            </MenuItem>
-          )} */}
-          <NextLink href={`/profile/${user.nickname}`} passHref>
-            <MenuItem as='a'>Zamówienia</MenuItem>
-          </NextLink>
+          {user && (
+            <NextLink href={`/profile/${user.nickname}`} passHref>
+              <MenuItem as='a'>Zamówienia</MenuItem>
+            </NextLink>
+          )}
         </Flex>
       </MenuList>
     </Menu>

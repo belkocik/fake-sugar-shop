@@ -30,8 +30,13 @@ What I used to create this project?
 
 ### Order details
 
-![alt text](https://media.graphassets.com/PIudkWhjTNCQlLRq92bE)
+![alt text](https://media.graphassets.com/qp00apORI2Z5dsD6GOc4)
 ![alt text](https://media.graphassets.com/gW93U010QwatXnAkiegA)
+
+### Test account:
+
+login: ukpwijgylccsskqgwq@nvhrw.com
+hasło: xk4s4gs6XsmLx2K
 
 ### Live demo
 

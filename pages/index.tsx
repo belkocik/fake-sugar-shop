@@ -158,6 +158,7 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
           />
         </InputGroup>
       </Box>
+
       {data.sugarsConnection.edges.length > 0 && (
         <Pagination
           hasPreviousPage={data.sugarsConnection.pageInfo.hasPreviousPage}
@@ -173,7 +174,7 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
             <AlertIcon />
             <AlertTitle>Wyszukiwarka</AlertTitle>
             <AlertDescription>
-              Szukany produkt nie istnieje w bazie danych.
+              Szukany produkt nie istnieje w bazie danych
             </AlertDescription>
           </Alert>
         </Box>
@@ -206,6 +207,17 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
           ))}
         </AnimatePresence>
       </MotionGrid>
+
+      {data.sugarsConnection.edges.length > 0 && (
+        <Box display={{ base: 'block', md: 'none' }}>
+          <Pagination
+            hasPreviousPage={data.sugarsConnection.pageInfo.hasPreviousPage}
+            hasNextPage={data.sugarsConnection.pageInfo.hasNextPage}
+            skip={skip}
+            setSkip={setSkip}
+          />
+        </Box>
+      )}
     </PageLayout>
   );
 };

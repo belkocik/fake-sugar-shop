@@ -93,8 +93,8 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
       searchValue,
       requestHeaders,
     ],
-    (endpoint, query) => fetcher(endpoint, query, { searchValue }),
-    { initialData: { sugars }, revalidateOnFocus: true }
+    (endpoint, query) => fetcher(endpoint, query, { searchValue })
+    // { initialData: { sugars }, revalidateOnFocus: true }
   );
   console.log('data', data);
   console.log('sugars', sugars);

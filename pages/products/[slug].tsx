@@ -125,7 +125,7 @@ const ProductSlugPage = ({ product }) => {
             <Image
               src={coverImage.url}
               width={1200}
-              height={700}
+              height={900}
               quality={50}
               rounded='lg'
               placeholder='blur'

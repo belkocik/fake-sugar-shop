@@ -8,6 +8,11 @@ import {
   GridProps,
   InputGroup,
   InputLeftElement,
+  Spinner,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from '@chakra-ui/react';
 import { GetServerSideProps, NextPage } from 'next';
 import { useState } from 'react';
@@ -16,6 +21,7 @@ import { request } from 'graphql-request';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search2Icon } from '@chakra-ui/icons';
 import { toast } from 'react-hot-toast';
+import Pagination from '@/components/pagination';
 
 const MotionGrid = motion<GridProps>(Grid);
 
@@ -34,76 +40,109 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const data = await fetcher(
     process.env.GRAPHCMS_ENDPOINT,
     `
-      query getSugars {
-        sugars {
-          title
-          description {
-            raw
+    query getSugars() {
+      sugarsConnection(first: 9, skip: 0) {
+        edges {
+          node {
+            title
+            description {
+              raw
+            }
+            id
+            slug
+            coverImage {
+              url
+            }
+            price
+            brand
+            stock
+            isNewProduct
+            isOnDiscount
+            discountValue
           }
-          id
-          slug
-          coverImage {
-            url
-          }
-          price
-          brand
-          stock
-          isNewProduct
-          isOnDiscount
-          discountValue
+        }
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          pageSize
         }
       }
+    }
+    
   `
   );
+  console.log('data from ddd', data);
   return {
     props: {
-      sugars: data.sugars,
+      sugars: data,
     },
   };
 };
 
+// query getSugars($searchValue: String) {
+// sugars( where: {title_contains: $searchValue}) {
+
 const IndexPage = ({ sugars }: SugarProductsData) => {
   const [searchValue, setSearchValue] = useState('');
+  const [skip, setSkip] = useState(0);
 
   const { data, error } = useSWR(
     [
       process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT,
-      `query getSugars($searchValue: String) {
-        sugars(where: {title_contains: $searchValue}) {
-          title
-          description {
-            raw
+      `
+         query getSugars($searchValue: String $skip: Int) {
+        sugarsConnection(where: {title_contains: $searchValue}, first: 9, skip: $skip) {
+          edges {
+            node {
+              title
+              description {
+                raw
+              }
+              id
+              slug
+              coverImage {
+                url
+              }
+              price
+              brand
+              stock
+              isNewProduct
+              isOnDiscount
+              discountValue
+            }
           }
-          id
-          slug
-          coverImage {
-            url
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            
           }
-          price
-          brand
-          stock
-          isNewProduct
-          isOnDiscount
-          discountValue
         }
       }
       
       
+      
   `,
       searchValue,
-      requestHeaders,
+      skip,
     ],
-    (endpoint, query) => fetcher(endpoint, query, { searchValue })
+    (endpoint, query) => fetcher(endpoint, query, { searchValue, skip }),
+    {
+      fallbackData: sugars,
+      revalidateOnFocus: true,
+    }
     // { initialData: { sugars }, revalidateOnFocus: true }
   );
-  console.log('data', data);
-  console.log('sugars', sugars);
+  // console.log('data', data);
+  // console.log('sugars', sugars);
+  if (!data) return <Spinner />;
 
   if (error) {
     return toast.error('Nie udało się pobrać danych (SWR).');
   }
   return (
     <PageLayout title='Home' description='Fake Sugar - sklep internetowy'>
+      {!data ? <Spinner /> : null}
+
       <Box>
         <InputGroup>
           <InputLeftElement pointerEvents='none'>
@@ -115,9 +154,22 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
             value={searchValue}
             onChange={(event) => setSearchValue(event.target.value)}
             focusBorderColor='teal.300'
+            disabled={skip === 0 ? false : true}
           />
         </InputGroup>
       </Box>
+
+      {data.sugarsConnection.edges.length === 0 && (
+        <Box mt={6}>
+          <Alert status='info' rounded='lg'>
+            <AlertIcon />
+            <AlertTitle>Wyszukiwarka</AlertTitle>
+            <AlertDescription>
+              Szukany produkt nie istnieje w bazie danych.
+            </AlertDescription>
+          </Alert>
+        </Box>
+      )}
 
       <MotionGrid
         templateColumns={{
@@ -128,24 +180,32 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
         gap={4}
       >
         <AnimatePresence>
-          {data?.sugars.map((product) => (
-            <Box key={product.slug}>
+          {data?.sugarsConnection?.edges?.map((product) => (
+            <Box key={product.node.slug}>
               <ProductCard
-                title={product.title}
-                brand={product.brand}
-                price={product.price}
-                coverImage={product.coverImage}
-                id={product.id}
-                slug={product.slug}
-                stock={product.stock}
-                isOnDiscount={product.isOnDiscount}
-                discountValue={product.discountValue}
-                isNewProduct={product.isNewProduct}
+                title={product.node.title}
+                brand={product.node.brand}
+                price={product.node.price}
+                coverImage={product.node.coverImage}
+                id={product.node.id}
+                slug={product.node.slug}
+                stock={product.node.stock}
+                isOnDiscount={product.node.isOnDiscount}
+                discountValue={product.node.discountValue}
+                isNewProduct={product.node.isNewProduct}
               />
             </Box>
           ))}
         </AnimatePresence>
       </MotionGrid>
+      {data.sugarsConnection.edges.length > 0 && (
+        <Pagination
+          hasPreviousPage={data.sugarsConnection.pageInfo.hasPreviousPage}
+          hasNextPage={data.sugarsConnection.pageInfo.hasNextPage}
+          skip={skip}
+          setSkip={setSkip}
+        />
+      )}
     </PageLayout>
   );
 };

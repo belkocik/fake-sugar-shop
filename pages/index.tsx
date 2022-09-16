@@ -90,6 +90,27 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
   const [skip, setSkip] = useState(0);
   const inputRef = useRef();
 
+  // search input focus start
+
+  useKeyPressEvent((e) => {
+    if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+      e.stopPropagation();
+      e.preventDefault();
+      // @ts-ignore
+      inputRef.current.focus();
+    }
+    return true;
+  });
+
+  const resetInputRef = () => {
+    // @ts-ignore
+    inputRef.current.blur();
+  };
+
+  useKeyPressEvent('Escape', resetInputRef);
+
+  // search input focus end
+
   const { data, error } = useSWR(
     [
       process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT,
@@ -143,27 +164,6 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
   if (error) {
     return toast.error('Nie udało się pobrać danych (SWR).');
   }
-
-  // search input focus start
-
-  useKeyPressEvent((e) => {
-    if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
-      e.stopPropagation();
-      e.preventDefault();
-      // @ts-ignore
-      inputRef.current.focus();
-    }
-    return true;
-  });
-
-  const resetInputRef = () => {
-    // @ts-ignore
-    inputRef.current.blur();
-  };
-
-  useKeyPressEvent('Escape', resetInputRef);
-
-  // search input focus end
 
   return (
     <PageLayout title='Home' description='Fake Sugar - sklep internetowy'>

@@ -88,6 +88,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 const IndexPage = ({ sugars }: SugarProductsData) => {
   const [searchValue, setSearchValue] = useState('');
   const [skip, setSkip] = useState(0);
+  const inputRef = useRef();
 
   const { data, error } = useSWR(
     [
@@ -145,7 +146,6 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
 
   // search input focus start
 
-  const inputRef = useRef();
   useKeyPressEvent((e) => {
     if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
       e.stopPropagation();

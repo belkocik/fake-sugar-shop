@@ -143,7 +143,7 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
     <PageLayout title='Home' description='Fake Sugar - sklep internetowy'>
       {!data ? <Spinner /> : null}
 
-      <Box>
+      <Box mb={4}>
         <InputGroup>
           <InputLeftElement pointerEvents='none'>
             <Search2Icon color='gray.300' />
@@ -158,6 +158,14 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
           />
         </InputGroup>
       </Box>
+      {data.sugarsConnection.edges.length > 0 && (
+        <Pagination
+          hasPreviousPage={data.sugarsConnection.pageInfo.hasPreviousPage}
+          hasNextPage={data.sugarsConnection.pageInfo.hasNextPage}
+          skip={skip}
+          setSkip={setSkip}
+        />
+      )}
 
       {data.sugarsConnection.edges.length === 0 && (
         <Box mt={6}>
@@ -198,14 +206,6 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
           ))}
         </AnimatePresence>
       </MotionGrid>
-      {data.sugarsConnection.edges.length > 0 && (
-        <Pagination
-          hasPreviousPage={data.sugarsConnection.pageInfo.hasPreviousPage}
-          hasNextPage={data.sugarsConnection.pageInfo.hasNextPage}
-          skip={skip}
-          setSkip={setSkip}
-        />
-      )}
     </PageLayout>
   );
 };

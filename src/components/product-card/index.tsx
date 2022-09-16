@@ -14,6 +14,7 @@ import {
   Badge,
   Skeleton,
   IconButton,
+  CenterProps,
 } from '@chakra-ui/react';
 import { FiShoppingBag } from 'react-icons/fi';
 import { SugarProductSchema } from '@/types/sugar-product-schema';
@@ -21,6 +22,9 @@ import NextLink from 'next/link';
 import { useDispatch } from 'react-redux';
 import { addToCart } from 'src/redux/slices/cartSlice';
 import useGetItemDetails from '@/utils/useGetItemDetails';
+import { motion } from 'framer-motion';
+
+const MotionCenter = motion<CenterProps>(Center);
 
 export const ProductCard = ({
   title,
@@ -40,7 +44,13 @@ export const ProductCard = ({
   const { discountPrice } = useGetItemDetails(price, discountValue);
 
   return (
-    <Center py={12}>
+    <MotionCenter
+      py={12}
+      layout
+      animate={{ opacity: 1 }}
+      initial={{ opacity: 0 }}
+      exit={{ opacity: 0 }}
+    >
       <Box
         role={'group'}
         p={6}
@@ -192,7 +202,7 @@ export const ProductCard = ({
           </HStack>
         </Stack>
       </Box>
-    </Center>
+    </MotionCenter>
   );
 };
 

@@ -41,7 +41,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     process.env.GRAPHCMS_ENDPOINT,
     `
     query getSugars() {
-      sugarsConnection(first: 9, skip: 0) {
+      sugarsConnection(orderBy: createdAt_DESC, first: 6, skip: 0) {
         edges {
           node {
             title
@@ -91,7 +91,7 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
       process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT,
       `
          query getSugars($searchValue: String $skip: Int) {
-        sugarsConnection(where: {title_contains: $searchValue}, first: 9, skip: $skip) {
+        sugarsConnection(orderBy: createdAt_DESC, where: {title_contains: $searchValue}, first: 6, skip: $skip) {
           edges {
             node {
               title

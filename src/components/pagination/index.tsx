@@ -1,16 +1,31 @@
-import { Button, HStack } from '@chakra-ui/react';
+import { Button, Stack, IconButton } from '@chakra-ui/react';
+import { ArrowRightIcon, ArrowLeftIcon } from '@chakra-ui/icons';
 
 const Pagination = ({ hasPreviousPage, hasNextPage, setSkip, skip }) => {
   return (
-    <HStack>
-      <Button disabled={!hasPreviousPage} onClick={() => setSkip(skip - 9)}>
-        Poprzednie produkty
+    <Stack direction='row'>
+      <IconButton
+        aria-label='previous page of products'
+        disabled={!hasPreviousPage}
+        onClick={() => setSkip(skip - 6)}
+        icon={<ArrowLeftIcon />}
+      ></IconButton>
+      <Button
+        aria-label='start page products'
+        onClick={() => setSkip(0)}
+        disabled={!skip}
+        bg='teal.200'
+        _hover={{ bg: 'teal.300' }}
+      >
+        🚀
       </Button>
-
-      <Button disabled={!hasNextPage} onClick={() => setSkip(skip + 9)}>
-        Następne produkty
-      </Button>
-    </HStack>
+      <IconButton
+        aria-label='next page of products'
+        disabled={!hasNextPage}
+        onClick={() => setSkip(skip + 6)}
+        icon={<ArrowRightIcon />}
+      ></IconButton>
+    </Stack>
   );
 };
 

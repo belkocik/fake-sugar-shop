@@ -106,10 +106,9 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
     <PageLayout title='Home' description='Fake Sugar - sklep internetowy'>
       <Box>
         <InputGroup>
-          <InputLeftElement
-            pointerEvents='none'
-            children={<Search2Icon color='gray.300' />}
-          />
+          <InputLeftElement pointerEvents='none'>
+            <Search2Icon color='gray.300' />
+          </InputLeftElement>
           <Input
             placeholder='Wyszukaj produkt'
             type='text'

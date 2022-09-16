@@ -13,6 +13,7 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
+  Kbd,
 } from '@chakra-ui/react';
 import { GetServerSideProps, NextPage } from 'next';
 import { useState } from 'react';
@@ -22,6 +23,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search2Icon } from '@chakra-ui/icons';
 import { toast } from 'react-hot-toast';
 import Pagination from '@/components/pagination';
+import { useEffect, useRef } from 'react';
+import { useKeyPressEvent } from 'react-use';
 
 const MotionGrid = motion<GridProps>(Grid);
 
@@ -139,6 +142,29 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
   if (error) {
     return toast.error('Nie udało się pobrać danych (SWR).');
   }
+
+  // search input focus start
+
+  const inputRef = useRef();
+  useKeyPressEvent((e) => {
+    if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+      e.stopPropagation();
+      e.preventDefault();
+      // @ts-ignore
+      inputRef.current.focus();
+    }
+    return true;
+  });
+
+  const resetInputRef = () => {
+    // @ts-ignore
+    inputRef.current.blur();
+  };
+
+  useKeyPressEvent('Escape', resetInputRef);
+
+  // search input focus end
+
   return (
     <PageLayout title='Home' description='Fake Sugar - sklep internetowy'>
       {!data ? <Spinner /> : null}
@@ -148,13 +174,15 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
           <InputLeftElement pointerEvents='none'>
             <Search2Icon color='gray.300' />
           </InputLeftElement>
+
           <Input
-            placeholder='Wyszukaj produkt'
+            placeholder='Wyszukaj produkt (ctrl+k)'
             type='text'
             value={searchValue}
             onChange={(event) => setSearchValue(event.target.value)}
             focusBorderColor='teal.300'
             disabled={skip === 0 ? false : true}
+            ref={inputRef}
           />
         </InputGroup>
       </Box>

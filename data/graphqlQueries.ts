@@ -15,6 +15,7 @@ export const getSugarProducts = async () => {
     {
       sugars {
         title
+        tags
         description {
           raw
         }

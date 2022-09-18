@@ -13,17 +13,29 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
+  Stack,
+  Tag,
+  TagLabel,
+  TagLeftIcon,
+  TagRightIcon,
+  TagCloseButton,
+  HStack,
 } from '@chakra-ui/react';
 import { GetServerSideProps, NextPage } from 'next';
 import { useState } from 'react';
 import useSWR from 'swr';
 import { request } from 'graphql-request';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search2Icon } from '@chakra-ui/icons';
+import {
+  Search2Icon,
+  ArrowForwardIcon,
+  ChevronRightIcon,
+} from '@chakra-ui/icons';
 import { toast } from 'react-hot-toast';
 import Pagination from '@/components/pagination';
 import { useRef } from 'react';
 import { useKeyPressEvent } from 'react-use';
+import NextLink from 'next/link';
 
 const MotionGrid = motion<GridProps>(Grid);
 
@@ -43,6 +55,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         edges {
           node {
             title
+            tags
             description {
               raw
             }
@@ -80,6 +93,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 const IndexPage = ({ sugars }: SugarProductsData) => {
   const [searchValue, setSearchValue] = useState('');
   const [skip, setSkip] = useState(0);
+  const [tags, setTags] = useState([]);
   const inputRef = useRef();
 
   // search input focus start
@@ -112,6 +126,7 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
           edges {
             node {
               title
+              tags
               description {
                 raw
               }
@@ -159,32 +174,71 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
     <PageLayout title='Home' description='Fake Sugar - sklep internetowy'>
       {!data ? <Spinner /> : null}
 
-      <Box mb={4}>
-        <InputGroup>
-          <InputLeftElement pointerEvents='none'>
-            <Search2Icon color='gray.300' />
-          </InputLeftElement>
+      <Stack
+        justify='space-between'
+        w='100%'
+        direction={{ base: 'column', md: 'row' }}
+        align='center'
+      >
+        <Box>
+          <InputGroup>
+            <InputLeftElement pointerEvents='none'>
+              <Search2Icon color='gray.300' />
+            </InputLeftElement>
 
-          <Input
-            placeholder='Wyszukaj produkt (ctrl+k)'
-            type='text'
-            value={searchValue}
-            onChange={(event) => setSearchValue(event.target.value)}
-            focusBorderColor='teal.300'
-            disabled={skip === 0 ? false : true}
-            ref={inputRef}
-          />
-        </InputGroup>
-      </Box>
+            <Input
+              placeholder='Wyszukaj produkt (ctrl+k)'
+              type='text'
+              value={searchValue}
+              onChange={(event) => setSearchValue(event.target.value)}
+              focusBorderColor='teal.300'
+              disabled={skip === 0 ? false : true}
+              ref={inputRef}
+            />
+          </InputGroup>
+        </Box>
 
-      {data.sugarsConnection.edges.length > 0 && (
-        <Pagination
-          hasPreviousPage={data.sugarsConnection.pageInfo.hasPreviousPage}
-          hasNextPage={data.sugarsConnection.pageInfo.hasNextPage}
-          skip={skip}
-          setSkip={setSkip}
-        />
-      )}
+        <HStack>
+          <NextLink href='/category/sugar' passHref>
+            <Tag
+              size='lg'
+              variant='outline'
+              colorScheme='teal'
+              onClick={() => setTags(['cukier'])}
+              cursor='pointer'
+              _hover={{ bg: 'teal.100' }}
+              transition='300ms'
+            >
+              <TagLabel>Cukier</TagLabel>
+              <TagRightIcon as={ArrowForwardIcon} />
+            </Tag>
+          </NextLink>
+          <NextLink href='/category/coal' passHref>
+            <Tag
+              size='lg'
+              variant='outline'
+              colorScheme='teal'
+              onClick={() => setTags(['węgiel'])}
+              cursor='pointer'
+              _hover={{ bg: 'teal.100' }}
+              transition='300ms'
+            >
+              <TagLabel>Węgiel</TagLabel>
+              <TagRightIcon as={ArrowForwardIcon} />
+            </Tag>
+          </NextLink>
+        </HStack>
+        <Box>
+          {data.sugarsConnection.edges.length >= 0 && (
+            <Pagination
+              hasPreviousPage={data.sugarsConnection.pageInfo.hasPreviousPage}
+              hasNextPage={data.sugarsConnection.pageInfo.hasNextPage}
+              skip={skip}
+              setSkip={setSkip}
+            />
+          )}
+        </Box>
+      </Stack>
 
       {data.sugarsConnection.edges.length === 0 && (
         <Box mt={6}>

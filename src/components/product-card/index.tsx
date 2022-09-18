@@ -22,9 +22,24 @@ import NextLink from 'next/link';
 import { useDispatch } from 'react-redux';
 import { addToCart } from 'src/redux/slices/cartSlice';
 import useGetItemDetails from '@/utils/useGetItemDetails';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 
 const MotionCenter = motion<CenterProps>(Center);
+
+const variants: Variants = {
+  hidden: {
+    opacity: 0,
+    transition: { duration: 0.4, type: 'easeOut' },
+  },
+  enter: {
+    opacity: 1,
+    transition: { duration: 0.4, type: 'easeOut' },
+  },
+  exit: {
+    opacity: 0,
+    transition: { duration: 0.4, type: 'easeOut' },
+  },
+};
 
 export const ProductCard = ({
   title,
@@ -47,9 +62,14 @@ export const ProductCard = ({
     <MotionCenter
       py={12}
       layout
-      animate={{ opacity: 1 }}
-      initial={{ opacity: 0 }}
-      exit={{ opacity: 0 }}
+      // animate={{ opacity: 1, type: 'easeOut' }}
+      // initial={{ opacity: 0, type: 'easeOut' }}
+      // exit={{ opacity: 0, type: 'easeOut' }}
+      // transition={{ duration: 0.4, type: 'easeOut' }}
+      initial='hidden'
+      animate='enter'
+      exit='exit'
+      variants={variants}
     >
       <Box
         role={'group'}

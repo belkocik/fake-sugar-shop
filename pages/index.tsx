@@ -13,7 +13,6 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
-  Kbd,
 } from '@chakra-ui/react';
 import { GetServerSideProps, NextPage } from 'next';
 import { useState } from 'react';
@@ -23,7 +22,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search2Icon } from '@chakra-ui/icons';
 import { toast } from 'react-hot-toast';
 import Pagination from '@/components/pagination';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { useKeyPressEvent } from 'react-use';
 
 const MotionGrid = motion<GridProps>(Grid);
@@ -32,12 +31,8 @@ interface SugarProductsData {
   sugars: SugarProductSchema[];
 }
 
-const requestHeaders = {
-  authorization: `Bearer ${process.env.NEXT_PUBLIC_GRAPHCMS_TOKEN}`,
-};
-
-const fetcher = (endpoint, query, variables?, requestHeaders?) =>
-  request(endpoint, query, variables, requestHeaders);
+const fetcher = (endpoint, query, variables?) =>
+  request(endpoint, query, variables);
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const data = await fetcher(
@@ -81,9 +76,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
     },
   };
 };
-
-// query getSugars($searchValue: String) {
-// sugars( where: {title_contains: $searchValue}) {
 
 const IndexPage = ({ sugars }: SugarProductsData) => {
   const [searchValue, setSearchValue] = useState('');
@@ -155,10 +147,8 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
       fallbackData: sugars,
       revalidateOnFocus: true,
     }
-    // { initialData: { sugars }, revalidateOnFocus: true }
   );
-  // console.log('data', data);
-  // console.log('sugars', sugars);
+
   if (!data) return <Spinner />;
 
   if (error) {
@@ -251,13 +241,3 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
 };
 
 export default IndexPage;
-
-// export const getServerSideProps: GetServerSideProps = async () => {
-//   const data = await getSugarProducts();
-
-//   return {
-//     props: {
-//       sugarProducts: data.sugars,
-//     },
-//   };
-// };

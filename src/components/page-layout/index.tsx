@@ -43,6 +43,12 @@ const PageLayout = ({ title, description, children }: PageProps) => {
           description: description,
           locale: 'pl_PL',
         }}
+        additionalLinkTags={[
+          {
+            rel: 'icon',
+            href: 'https://media.graphassets.com/output=format:jpg/EqWFOSJKQbuCfJlS2Dw4',
+          },
+        ]}
       />
       <MotionContainer
         display='flex'

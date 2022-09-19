@@ -32,7 +32,13 @@ const CartIcon = () => {
     <Stack direction='row' spacing={4}>
       <NextLink href='/cart' passHref>
         <Link>
-          <Avatar size='sm' src='/assets/images/cart-icon.svg' bg='none' mr={2}>
+          <Avatar
+            size='sm'
+            src='/assets/images/cart-icon.svg'
+            bg='none'
+            mr={2}
+            name='cart icon'
+          >
             {itemsInCart > 0 && (
               <AvatarBadge borderColor='black' bg='teal.200' boxSize='1.7em'>
                 <Text>{itemsInCart}</Text>

@@ -19,8 +19,12 @@ const AuthLinks = () => {
 
   return (
     <Menu>
-      <MenuButton>
-        <Avatar src={`${user ? user.picture : null}`} bg='gray.300'>
+      <MenuButton aria-label='Avatar of profile account'>
+        <Avatar
+          src={`${user ? user.picture : null}`}
+          bg='gray.300'
+          name={user.nickname}
+        >
           <AvatarBadge
             boxSize='1.25em'
             bg={`${user ? 'green.500' : 'red.500'} `}

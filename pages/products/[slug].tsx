@@ -96,7 +96,7 @@ const ProductSlugPage = ({ product }) => {
                 <HStack align='center'>
                   {isOnDiscount && isNewProduct ? (
                     <Flex gap={1}>
-                      <Badge colorScheme='purple'>Nowy</Badge>
+                      <Badge colorScheme='teal'>Nowy</Badge>
                       <Badge colorScheme='red'>
                         Promocja -{discountValue}%
                       </Badge>
@@ -104,7 +104,7 @@ const ProductSlugPage = ({ product }) => {
                   ) : isOnDiscount ? (
                     <Badge colorScheme='red'>Promocja -{discountValue}%</Badge>
                   ) : isNewProduct ? (
-                    <Badge colorScheme='purple'>Nowy</Badge>
+                    <Badge colorScheme='teal'>Nowy</Badge>
                   ) : null}
                 </HStack>
               </Box>

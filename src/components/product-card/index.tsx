@@ -5,16 +5,14 @@ import {
   Heading,
   Text,
   Stack,
-  Image,
-  Icon,
   HStack,
   Tooltip,
   Flex,
   Link,
   Badge,
-  Skeleton,
   IconButton,
   CenterProps,
+  chakra,
 } from '@chakra-ui/react';
 import { FiShoppingBag } from 'react-icons/fi';
 import { SugarProductSchema } from '@/types/sugar-product-schema';
@@ -23,8 +21,22 @@ import { useDispatch } from 'react-redux';
 import { addToCart } from 'src/redux/slices/cartSlice';
 import useGetItemDetails from '@/utils/useGetItemDetails';
 import { motion, Variants } from 'framer-motion';
+import NextImage from 'next/image';
 
 const MotionCenter = motion<CenterProps>(Center);
+
+const Image = chakra(NextImage, {
+  shouldForwardProp: (prop) =>
+    [
+      'width',
+      'height',
+      'src',
+      'alt',
+      'quality',
+      'placeholder',
+      'blurDataURL',
+    ].includes(prop),
+});
 
 const variants: Variants = {
   hidden: {
@@ -62,10 +74,6 @@ export const ProductCard = ({
     <MotionCenter
       py={12}
       layout
-      // animate={{ opacity: 1, type: 'easeOut' }}
-      // initial={{ opacity: 0, type: 'easeOut' }}
-      // exit={{ opacity: 0, type: 'easeOut' }}
-      // transition={{ duration: 0.4, type: 'easeOut' }}
       initial='hidden'
       animate='enter'
       exit='exit'
@@ -106,15 +114,15 @@ export const ProductCard = ({
           }}
         >
           <Image
-            rounded={'lg'}
             width={282}
             height={230}
-            objectFit={'cover'}
             src={coverImage.url}
             alt={title}
-            loading='lazy'
-            fallbackSrc='https://via.placeholder.com/282x230'
-            onLoad={() => <Skeleton height='230px' />}
+            quality={50}
+            rounded='lg'
+            placeholder='blur'
+            blurDataURL={coverImage.url}
+            objectFit='fill'
           />
           {isOnDiscount && isNewProduct ? (
             <Flex
@@ -123,27 +131,27 @@ export const ProductCard = ({
               left='50%'
               transform='translateX(-50%)'
             >
-              <Badge colorScheme='purple'>Nowy</Badge>
+              <Badge colorScheme='teal'>Nowy</Badge>
               <Badge colorScheme='red'>Promocja -{discountValue}%</Badge>
             </Flex>
           ) : isOnDiscount ? (
-            <Badge
-              colorScheme='red'
+            <Flex
               position='absolute'
+              gap={1}
               left='50%'
               transform='translateX(-50%)'
             >
-              Promocja -{discountValue}%
-            </Badge>
+              <Badge colorScheme='red'>Promocja -{discountValue}%</Badge>
+            </Flex>
           ) : isNewProduct ? (
-            <Badge
-              colorScheme='purple'
+            <Flex
               position='absolute'
+              gap={1}
               left='50%'
               transform='translateX(-50%)'
             >
-              Nowy
-            </Badge>
+              <Badge colorScheme='teal'>Nowy</Badge>
+            </Flex>
           ) : null}
         </Box>
 

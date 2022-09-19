@@ -12,6 +12,11 @@ import {
   TagLabel,
   TagLeftIcon,
   HStack,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  BoxProps,
 } from '@chakra-ui/react';
 import React, { useState, useRef } from 'react';
 import { GetServerSideProps } from 'next';
@@ -29,6 +34,7 @@ import { SugarProductSchema } from '@/types/sugar-product-schema';
 const fetcher = (endpoint, query, variables?) =>
   request(endpoint, query, variables);
 const MotionGrid = motion<GridProps>(Grid);
+const MotionBox = motion<Omit<BoxProps, 'transition'>>(Box);
 
 interface SugarProductsData {
   coalCategory: SugarProductSchema[];
@@ -173,6 +179,24 @@ const CoalCategory = ({ coalCategory }: SugarProductsData) => {
           )}
         </Box>
       </Stack>
+
+      {data.sugarsConnection.edges.length === 0 && (
+        <MotionBox
+          mt={6}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.7, delay: 0.7 }}
+        >
+          <Alert status='info' rounded='lg'>
+            <AlertIcon />
+            <AlertTitle>Wyszukiwarka</AlertTitle>
+            <AlertDescription>
+              Szukany produkt nie istnieje w bazie danych
+            </AlertDescription>
+          </Alert>
+        </MotionBox>
+      )}
 
       <MotionGrid
         templateColumns={{

@@ -18,6 +18,7 @@ import {
   TagLabel,
   TagRightIcon,
   HStack,
+  BoxProps,
 } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { useState, useRef, useCallback } from 'react';
@@ -31,6 +32,7 @@ import { useKeyPressEvent } from 'react-use';
 import NextLink from 'next/link';
 
 const MotionGrid = motion<GridProps>(Grid);
+const MotionBox = motion<Omit<BoxProps, 'transition'>>(Box);
 
 interface SugarProductsData {
   sugars: SugarProductSchema[];
@@ -190,7 +192,13 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
       </Stack>
 
       {data.sugarsConnection.edges.length === 0 && (
-        <Box mt={6}>
+        <MotionBox
+          mt={6}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.7, delay: 0.7 }}
+        >
           <Alert status='info' rounded='lg'>
             <AlertIcon />
             <AlertTitle>Wyszukiwarka</AlertTitle>
@@ -198,7 +206,7 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
               Szukany produkt nie istnieje w bazie danych
             </AlertDescription>
           </Alert>
-        </Box>
+        </MotionBox>
       )}
 
       <MotionGrid

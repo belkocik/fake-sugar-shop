@@ -18,16 +18,23 @@ import {
   TagLabel,
   TagRightIcon,
   HStack,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  useDisclosure,
+  Button,
 } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import useSWR from 'swr';
 import { request } from 'graphql-request';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search2Icon, ArrowForwardIcon } from '@chakra-ui/icons';
 import { toast } from 'react-hot-toast';
 import Pagination from '@/components/pagination';
-import { useRef } from 'react';
 import { useKeyPressEvent } from 'react-use';
 import NextLink from 'next/link';
 
@@ -43,7 +50,7 @@ const fetcher = (endpoint, query, variables?) =>
 const IndexPage = ({ sugars }: SugarProductsData) => {
   const [searchValue, setSearchValue] = useState('');
   const [skip, setSkip] = useState(0);
-  const [tags, setTags] = useState([]);
+
   const inputRef = useRef();
 
   // search input focus start
@@ -120,6 +127,9 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
     return toast.error('Nie udało się pobrać danych (SWR).');
   }
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
+
   return (
     <PageLayout title='Home' description='Fake Sugar - sklep internetowy'>
       {!data ? <Spinner /> : null}
@@ -156,7 +166,6 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
               size='lg'
               variant='outline'
               colorScheme='teal'
-              onClick={() => setTags(['cukier'])}
               cursor='pointer'
               _hover={{ bg: 'teal.100' }}
               transition='300ms'
@@ -170,7 +179,6 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
               size='lg'
               variant='outline'
               colorScheme='teal'
-              onClick={() => setTags(['węgiel'])}
               cursor='pointer'
               _hover={{ bg: 'teal.100' }}
               transition='300ms'

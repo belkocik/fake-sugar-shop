@@ -6,11 +6,16 @@ import {
   Heading,
   Box,
   VStack,
+  Spinner,
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { insertDecimal } from '@/utils/insertDecimal';
 import { useUser } from '@auth0/nextjs-auth0';
-import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import {
+  PayPalScriptProvider,
+  PayPalButtons,
+  usePayPalScriptReducer,
+} from '@paypal/react-paypal-js';
 import { toast } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { clearCart } from 'src/redux/slices/cartSlice';
@@ -31,6 +36,7 @@ const hygraphClient = new GraphQLClient(
 const CheckoutComp = ({ total, shipping, cart }) => {
   const [paymentOk, setPaymentOk] = useState(``);
   const [updateStock, setUpdateStock] = useState(false);
+  const [error, setError] = useState(null);
   const { user } = useUser();
 
   const quantityOfProducts = cart.map((item) => {
@@ -60,6 +66,13 @@ const CheckoutComp = ({ total, shipping, cart }) => {
     }
     // eslint-disable-next-line
   }, [paymentOk]);
+
+  if (error) {
+    toast.error(`Wystąpił błąd podczas płatności PayPal. ${error}`, {
+      duration: 6000,
+      icon: '🚫',
+    });
+  }
 
   return (
     <Flex
@@ -128,6 +141,12 @@ const CheckoutComp = ({ total, shipping, cart }) => {
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }
                   });
+                }}
+                onCancel={() => {
+                  toast.error('Anulowałeś płatność.', { icon: '😢' });
+                }}
+                onError={(err) => {
+                  setError(err);
                 }}
               />
             </PayPalScriptProvider>

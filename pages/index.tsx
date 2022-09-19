@@ -16,21 +16,15 @@ import {
   Stack,
   Tag,
   TagLabel,
-  TagLeftIcon,
   TagRightIcon,
-  TagCloseButton,
   HStack,
 } from '@chakra-ui/react';
-import { GetServerSideProps, NextPage } from 'next';
+import { GetServerSideProps } from 'next';
 import { useState } from 'react';
 import useSWR from 'swr';
 import { request } from 'graphql-request';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Search2Icon,
-  ArrowForwardIcon,
-  ChevronRightIcon,
-} from '@chakra-ui/icons';
+import { Search2Icon, ArrowForwardIcon } from '@chakra-ui/icons';
 import { toast } from 'react-hot-toast';
 import Pagination from '@/components/pagination';
 import { useRef } from 'react';
@@ -45,50 +39,6 @@ interface SugarProductsData {
 
 const fetcher = (endpoint, query, variables?) =>
   request(endpoint, query, variables);
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  const data = await fetcher(
-    process.env.GRAPHCMS_ENDPOINT,
-    `
-    query getSugars() {
-      sugarsConnection(orderBy: createdAt_DESC, first: 6, skip: 0) {
-        edges {
-          node {
-            title
-            tags
-            description {
-              raw
-            }
-            id
-            slug
-            coverImage {
-              url
-            }
-            price
-            brand
-            stock
-            isNewProduct
-            isOnDiscount
-            discountValue
-          }
-        }
-        pageInfo {
-          hasNextPage
-          hasPreviousPage
-          pageSize
-        }
-      }
-    }
-    
-  `
-  );
-  console.log('data from ddd', data);
-  return {
-    props: {
-      sugars: data,
-    },
-  };
-};
 
 const IndexPage = ({ sugars }: SugarProductsData) => {
   const [searchValue, setSearchValue] = useState('');
@@ -192,8 +142,10 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
               value={searchValue}
               onChange={(event) => setSearchValue(event.target.value)}
               focusBorderColor='teal.300'
-              disabled={skip === 0 ? false : true}
+              // disabled={skip === 0 ? false : true}
               ref={inputRef}
+              onClick={() => setSkip(0)}
+              onFocus={() => setSkip(0)}
             />
           </InputGroup>
         </Box>
@@ -295,3 +247,47 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
 };
 
 export default IndexPage;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const data = await fetcher(
+    process.env.GRAPHCMS_ENDPOINT,
+    `
+    query getSugars() {
+      sugarsConnection(orderBy: createdAt_DESC, first: 6, skip: 0) {
+        edges {
+          node {
+            title
+            tags
+            description {
+              raw
+            }
+            id
+            slug
+            coverImage {
+              url
+            }
+            price
+            brand
+            stock
+            isNewProduct
+            isOnDiscount
+            discountValue
+          }
+        }
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          pageSize
+        }
+      }
+    }
+    
+  `
+  );
+  console.log('data from ddd', data);
+  return {
+    props: {
+      sugars: data,
+    },
+  };
+};

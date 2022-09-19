@@ -9,6 +9,7 @@ import {
   AlertIcon,
   AlertDescription,
   Spinner,
+  Button,
 } from '@chakra-ui/react';
 import React from 'react';
 import { GetServerSideProps } from 'next';
@@ -96,6 +97,11 @@ const Profile = ({ order }) => {
                 </Text>
               )}
             </Box>
+          </Box>
+          <Box m={4}>
+            <NextLink href='/' passHref>
+              <Button colorScheme='gray'>Powróć do strony głównej</Button>
+            </NextLink>
           </Box>
         </Flex>
       </PageLayout>

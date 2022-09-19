@@ -18,14 +18,6 @@ import {
   TagLabel,
   TagRightIcon,
   HStack,
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogContent,
-  AlertDialogOverlay,
-  useDisclosure,
-  Button,
 } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { useState, useRef, useCallback } from 'react';
@@ -126,9 +118,6 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
   if (error) {
     return toast.error('Nie udało się pobrać danych (SWR).');
   }
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef = useRef();
 
   return (
     <PageLayout title='Home' description='Fake Sugar - sklep internetowy'>

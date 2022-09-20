@@ -23,7 +23,7 @@ const AuthLinks = () => {
         <Avatar
           src={`${user ? user.picture : null}`}
           bg='gray.300'
-          name={user.nickname}
+          name='profile avatar'
         >
           <AvatarBadge
             boxSize='1.25em'

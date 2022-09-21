@@ -55,6 +55,8 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
     800
   );
 
+  console.log('data from sugars', sugars);
+
   const inputRef = useRef();
 
   // search input focus start
@@ -66,15 +68,18 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
       // @ts-ignore
       inputRef.current.focus();
     }
-    return true;
+    return false;
   });
 
-  const resetInputRef = () => {
-    // @ts-ignore
-    inputRef.current.blur();
-  };
-
-  useKeyPressEvent('Escape', resetInputRef);
+  useKeyPressEvent((e) => {
+    if (e.key === 'Escape') {
+      e.stopPropagation();
+      e.preventDefault();
+      // @ts-ignore
+      inputRef.current.blur();
+    }
+    return false;
+  });
 
   // search input focus end
 
@@ -111,9 +116,6 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
           }
         }
       }
-      
-      
-      
   `,
       searchValue,
       skip,
@@ -150,10 +152,8 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
             <Input
               placeholder='Wyszukaj produkt (ctrl+k)'
               type='text'
-              // value={searchValue}
               onChange={(event) => debounced(event.target.value)}
               focusBorderColor='teal.300'
-              // disabled={skip === 0 ? false : true}
               ref={inputRef}
               onClick={() => setSkip(0)}
               onFocus={() => setSkip(0)}

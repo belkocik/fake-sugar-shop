@@ -127,7 +127,6 @@ const CoalCategory = ({ coalCategory }: SugarProductsData) => {
     }
   );
 
-  console.log(data);
   if (!data) return <Spinner />;
 
   if (error) {

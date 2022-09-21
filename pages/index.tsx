@@ -297,7 +297,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
     
   `
   );
-  console.log('calling from database ssr:', data);
 
   return {
     props: {

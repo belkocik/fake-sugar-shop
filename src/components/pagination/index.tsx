@@ -1,6 +1,5 @@
 import { Button, Stack, IconButton } from '@chakra-ui/react';
 import { ArrowRightIcon, ArrowLeftIcon } from '@chakra-ui/icons';
-import React from 'react';
 
 const Pagination = ({ hasPreviousPage, hasNextPage, setSkip, skip }) => {
   return (
@@ -30,4 +29,4 @@ const Pagination = ({ hasPreviousPage, hasNextPage, setSkip, skip }) => {
   );
 };
 
-export default React.memo(Pagination);
+export default Pagination;

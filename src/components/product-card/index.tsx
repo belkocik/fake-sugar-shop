@@ -22,7 +22,6 @@ import { addToCart } from 'src/redux/slices/cartSlice';
 import useGetItemDetails from '@/utils/useGetItemDetails';
 import { motion, Variants } from 'framer-motion';
 import NextImage from 'next/image';
-import React from 'react';
 
 const MotionCenter = motion<CenterProps>(Center);
 
@@ -235,4 +234,4 @@ export const ProductCard = ({
   );
 };
 
-export default React.memo(ProductCard);
+export default ProductCard;

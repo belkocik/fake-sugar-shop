@@ -21,7 +21,7 @@ import {
   BoxProps,
 } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import useSWR from 'swr';
 import { request } from 'graphql-request';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -30,7 +30,6 @@ import { toast } from 'react-hot-toast';
 import Pagination from '@/components/pagination';
 import { useKeyPressEvent } from 'react-use';
 import NextLink from 'next/link';
-
 import { useDebouncedCallback } from 'use-debounce';
 
 const MotionGrid = motion<GridProps>(Grid);
@@ -46,13 +45,13 @@ const fetcher = (endpoint, query, variables?) =>
 const IndexPage = ({ sugars }: SugarProductsData) => {
   const [searchValue, setSearchValue] = useState('');
   const [skip, setSkip] = useState(0);
+
   const debounced = useDebouncedCallback(
-    // function
-    (searchValue) => {
+    useCallback((searchValue) => {
       setSearchValue(searchValue);
-    },
-    // delay in ms
-    800
+    }, []),
+    500,
+    { maxWait: 4000 }
   );
 
   const inputRef = useRef();
@@ -121,7 +120,9 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
     (endpoint, query) => fetcher(endpoint, query, { searchValue, skip }),
     {
       fallbackData: sugars,
-      revalidateOnFocus: false,
+      revalidateOnFocus: true,
+      revalidateOnReconnect: false,
+      revalidateIfStale: true,
     }
   );
 

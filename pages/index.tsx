@@ -20,8 +20,8 @@ import {
   HStack,
   BoxProps,
 } from '@chakra-ui/react';
-import { GetServerSideProps } from 'next';
-import { useState, useRef, useCallback } from 'react';
+import { GetServerSideProps, NextPage } from 'next';
+import React, { useState, useRef, useCallback } from 'react';
 import useSWR from 'swr';
 import { request } from 'graphql-request';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -30,6 +30,8 @@ import { toast } from 'react-hot-toast';
 import Pagination from '@/components/pagination';
 import { useKeyPressEvent } from 'react-use';
 import NextLink from 'next/link';
+
+import { useDebouncedCallback } from 'use-debounce';
 
 const MotionGrid = motion<GridProps>(Grid);
 const MotionBox = motion<Omit<BoxProps, 'transition'>>(Box);
@@ -44,6 +46,16 @@ const fetcher = (endpoint, query, variables?) =>
 const IndexPage = ({ sugars }: SugarProductsData) => {
   const [searchValue, setSearchValue] = useState('');
   const [skip, setSkip] = useState(0);
+  const debounced = useDebouncedCallback(
+    // function
+    (searchValue) => {
+      setSearchValue(searchValue);
+    },
+    // delay in ms
+    3000
+  );
+
+  console.log('data from sugars', sugars);
 
   const inputRef = useRef();
 
@@ -111,9 +123,10 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
     (endpoint, query) => fetcher(endpoint, query, { searchValue, skip }),
     {
       fallbackData: sugars,
-      revalidateOnFocus: true,
+      revalidateOnFocus: false,
     }
   );
+  console.log('data from swr', data);
 
   if (!data) return <Spinner />;
 
@@ -140,8 +153,8 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
             <Input
               placeholder='Wyszukaj produkt (ctrl+k)'
               type='text'
-              value={searchValue}
-              onChange={(event) => setSearchValue(event.target.value)}
+              // value={searchValue}
+              onChange={(event) => debounced(event.target.value)}
               focusBorderColor='teal.300'
               // disabled={skip === 0 ? false : true}
               ref={inputRef}
@@ -289,7 +302,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
     
   `
   );
-  console.log('data from ddd', data);
+  console.log('calling from database ssr:', data);
+
   return {
     props: {
       sugars: data,

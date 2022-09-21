@@ -23,7 +23,7 @@ const App = ({
     <ChakraProvider theme={theme}>
       <UserProvider user={user}>
         <Provider store={store}>
-          <PersistGate persistor={persistor}>
+          <PersistGate persistor={persistor} loading={null}>
             <Layout>
               <NextNProgress
                 options={{ easing: 'ease', speed: 500 }}

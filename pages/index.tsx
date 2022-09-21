@@ -20,8 +20,8 @@ import {
   HStack,
   BoxProps,
 } from '@chakra-ui/react';
-import { GetServerSideProps, NextPage } from 'next';
-import React, { useState, useRef, useCallback } from 'react';
+import { GetServerSideProps } from 'next';
+import React, { useState, useRef } from 'react';
 import useSWR from 'swr';
 import { request } from 'graphql-request';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -52,10 +52,8 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
       setSearchValue(searchValue);
     },
     // delay in ms
-    3000
+    800
   );
-
-  console.log('data from sugars', sugars);
 
   const inputRef = useRef();
 
@@ -126,7 +124,6 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
       revalidateOnFocus: false,
     }
   );
-  console.log('data from swr', data);
 
   if (!data) return <Spinner />;
 

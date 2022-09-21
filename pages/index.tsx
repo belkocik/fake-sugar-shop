@@ -55,8 +55,6 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
     800
   );
 
-  console.log('data from sugars', sugars);
-
   const inputRef = useRef();
 
   // search input focus start

@@ -30,6 +30,7 @@ import { Search2Icon, ArrowBackIcon } from '@chakra-ui/icons';
 import { useKeyPressEvent } from 'react-use';
 import NextLink from 'next/link';
 import { SugarProductSchema } from '@/types/sugar-product-schema';
+import { useDebouncedCallback } from 'use-debounce';
 
 interface SugarProductsData {
   sugarCategory: SugarProductSchema[];
@@ -46,6 +47,15 @@ const SugarCategory = ({ sugarCategory }: SugarProductsData) => {
   const [skip, setSkip] = useState(0);
   const inputRef = useRef();
 
+  const debounced = useDebouncedCallback(
+    // function
+    (searchValue) => {
+      setSearchValue(searchValue);
+    },
+    // delay in ms
+    800
+  );
+
   // search input focus start
 
   useKeyPressEvent((e) => {
@@ -55,15 +65,18 @@ const SugarCategory = ({ sugarCategory }: SugarProductsData) => {
       // @ts-ignore
       inputRef.current.focus();
     }
-    return true;
+    return false;
   });
 
-  const resetInputRef = () => {
-    // @ts-ignore
-    inputRef.current.blur();
-  };
-
-  useKeyPressEvent('Escape', resetInputRef);
+  useKeyPressEvent((e) => {
+    if (e.key === 'Escape') {
+      e.stopPropagation();
+      e.preventDefault();
+      // @ts-ignore
+      inputRef.current.blur();
+    }
+    return false;
+  });
 
   // search input focus end
 
@@ -141,10 +154,8 @@ const SugarCategory = ({ sugarCategory }: SugarProductsData) => {
             <Input
               placeholder='Wyszukaj produkt (ctrl+k)'
               type='text'
-              value={searchValue}
-              onChange={(event) => setSearchValue(event.target.value)}
+              onChange={(event) => debounced(event.target.value)}
               focusBorderColor='teal.300'
-              // disabled={skip === 0 ? false : true}
               ref={inputRef}
               onClick={() => setSkip(0)}
               onFocus={() => setSkip(0)}

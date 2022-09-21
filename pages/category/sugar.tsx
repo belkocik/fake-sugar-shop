@@ -18,7 +18,7 @@ import {
   AlertDescription,
   BoxProps,
 } from '@chakra-ui/react';
-import React, { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { GetServerSideProps } from 'next';
 import { request } from 'graphql-request';
 import useSWR from 'swr';
@@ -48,12 +48,11 @@ const SugarCategory = ({ sugarCategory }: SugarProductsData) => {
   const inputRef = useRef();
 
   const debounced = useDebouncedCallback(
-    // function
-    (searchValue) => {
+    useCallback((searchValue) => {
       setSearchValue(searchValue);
-    },
-    // delay in ms
-    800
+    }, []),
+    500,
+    { maxWait: 4000 }
   );
 
   // search input focus start

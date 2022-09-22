@@ -35,4 +35,4 @@ const DataNotFound = ({ sugarsConnection }) => {
   );
 };
 
-export default DataNotFound;
+export default React.memo(DataNotFound);

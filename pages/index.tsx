@@ -3,7 +3,7 @@ import ProductCard from '@/components/product-card';
 import { SugarProductSchema } from '@/types/sugar-product-schema';
 import { Grid, Box, GridProps, Spinner } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import useSWR from 'swr';
 import { request } from 'graphql-request';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -13,6 +13,7 @@ import Pagination from '@/components/pagination';
 
 import TopBarNavigation from '@/components/top-bar-navigation';
 import DataNotFound from '@/components/data-not-found';
+import { useDebouncedCallback } from 'use-debounce';
 
 const MotionGrid = motion<GridProps>(Grid);
 
@@ -27,6 +28,10 @@ const IndexPage = ({ sugars }: ISugarProductsData) => {
   const [searchValue, setSearchValue] = useState('');
   const [skip, setSkip] = useState(0);
   const router = useRouter();
+
+  const debounced = useDebouncedCallback((searchValue) => {
+    setSearchValue(searchValue);
+  }, 1000);
 
   const { data, error } = useSWR(
     [
@@ -87,8 +92,8 @@ const IndexPage = ({ sugars }: ISugarProductsData) => {
         sugarsConnection={data.sugarsConnection}
         setSkip={setSkip}
         skip={skip}
-        setSearchValue={setSearchValue}
         categoryPath={router.pathname}
+        debounced={debounced}
       />
 
       {/* If there is no searchValue in database \/ */}

@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react';
+import { useRef } from 'react';
 import {
   Stack,
   Box,
@@ -11,25 +11,15 @@ import MainCategoriesNavigation from '../main-categories-navigation';
 import Pagination from '../pagination';
 import { Search2Icon } from '@chakra-ui/icons';
 import { useKeyPressEvent } from 'react-use';
-import { useDebouncedCallback } from 'use-debounce';
 
 const TopBarNavigation = ({
   sugarsConnection,
   setSkip,
   skip,
   categoryPath,
-  setSearchValue,
+  debounced,
 }) => {
-  const debounced = useDebouncedCallback(
-    useCallback((searchValue) => {
-      setSearchValue(searchValue);
-    }, []),
-    1000,
-    { maxWait: 2000 }
-  );
-
   // search input focus start
-
   const inputRef = useRef();
 
   useKeyPressEvent((e) => {
@@ -53,6 +43,7 @@ const TopBarNavigation = ({
   });
 
   // search input focus end
+
   return (
     <Stack
       justify='space-between'

@@ -23,6 +23,7 @@ import { useRouter } from 'next/router';
 import { SugarProductSchema } from '@/types/sugar-product-schema';
 
 import TopBarNavigation from '@/components/top-bar-navigation';
+import { useDebouncedCallback } from 'use-debounce';
 
 const fetcher = (endpoint, query, variables?) =>
   request(endpoint, query, variables);
@@ -34,10 +35,13 @@ interface ISugarProductsData {
 }
 
 const CoalCategory = ({ coalCategory }: ISugarProductsData) => {
-  // console.log('sugar category data', sugarCategory);
   const [searchValue, setSearchValue] = useState('');
   const [skip, setSkip] = useState(0);
   const router = useRouter();
+
+  const debounced = useDebouncedCallback((searchValue) => {
+    setSearchValue(searchValue);
+  }, 1000);
 
   const { data, error } = useSWR(
     [
@@ -101,8 +105,8 @@ const CoalCategory = ({ coalCategory }: ISugarProductsData) => {
         sugarsConnection={data.sugarsConnection}
         setSkip={setSkip}
         skip={skip}
-        setSearchValue={setSearchValue}
         categoryPath={router.pathname}
+        debounced={debounced}
       />
 
       {/* If there is no searchValue in database \/ */}

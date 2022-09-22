@@ -22,6 +22,7 @@ import { useRouter } from 'next/router';
 import { SugarProductSchema } from '@/types/sugar-product-schema';
 
 import TopBarNavigation from '@/components/top-bar-navigation';
+import { useDebouncedCallback } from 'use-debounce';
 
 interface ISugarProductsData {
   sugarCategory: SugarProductSchema[];
@@ -33,9 +34,13 @@ const MotionGrid = motion<GridProps>(Grid);
 const MotionBox = motion<Omit<BoxProps, 'transition'>>(Box);
 
 const SugarCategory = ({ sugarCategory }: ISugarProductsData) => {
-  // console.log('sugar category data', sugarCategory);
   const [searchValue, setSearchValue] = useState('');
   const [skip, setSkip] = useState(0);
+
+  const debounced = useDebouncedCallback((searchValue) => {
+    setSearchValue(searchValue);
+  }, 1000);
+
   const router = useRouter();
 
   const { data, error } = useSWR(
@@ -100,8 +105,8 @@ const SugarCategory = ({ sugarCategory }: ISugarProductsData) => {
         sugarsConnection={data.sugarsConnection}
         setSkip={setSkip}
         skip={skip}
-        setSearchValue={setSearchValue}
         categoryPath={router.pathname}
+        debounced={debounced}
       />
 
       {/* If there is no searchValue in database \/ */}

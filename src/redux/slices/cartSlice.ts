@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import toast from 'react-hot-toast';
 
-interface CartState {
+interface ICartState {
   title: string;
   brand: string;
   price: number;
@@ -15,11 +15,11 @@ interface CartState {
   quantity: number;
 }
 
-interface CartStateData {
-  cart: CartState[];
+interface ICartStateData {
+  cart: ICartState[];
 }
 
-const initialState: CartStateData = {
+const initialState: ICartStateData = {
   cart: [],
 };
 

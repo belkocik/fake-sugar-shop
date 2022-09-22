@@ -1,84 +1,32 @@
 import PageLayout from '@/components/page-layout';
 import ProductCard from '@/components/product-card';
 import { SugarProductSchema } from '@/types/sugar-product-schema';
-import {
-  Grid,
-  Box,
-  Input,
-  GridProps,
-  InputGroup,
-  InputLeftElement,
-  Spinner,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-  Stack,
-  Tag,
-  TagLabel,
-  TagRightIcon,
-  HStack,
-  BoxProps,
-} from '@chakra-ui/react';
+import { Grid, Box, GridProps, Spinner } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState } from 'react';
 import useSWR from 'swr';
 import { request } from 'graphql-request';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search2Icon, ArrowForwardIcon } from '@chakra-ui/icons';
+import { useRouter } from 'next/router';
 import { toast } from 'react-hot-toast';
 import Pagination from '@/components/pagination';
-import { useKeyPressEvent } from 'react-use';
-import NextLink from 'next/link';
-import { useDebouncedCallback } from 'use-debounce';
+
+import TopBarNavigation from '@/components/top-bar-navigation';
+import DataNotFound from '@/components/data-not-found';
 
 const MotionGrid = motion<GridProps>(Grid);
-const MotionBox = motion<Omit<BoxProps, 'transition'>>(Box);
 
-interface SugarProductsData {
+interface ISugarProductsData {
   sugars: SugarProductSchema[];
 }
 
 const fetcher = (endpoint, query, variables?) =>
   request(endpoint, query, variables);
 
-const IndexPage = ({ sugars }: SugarProductsData) => {
+const IndexPage = ({ sugars }: ISugarProductsData) => {
   const [searchValue, setSearchValue] = useState('');
   const [skip, setSkip] = useState(0);
-
-  const debounced = useDebouncedCallback(
-    useCallback((searchValue) => {
-      setSearchValue(searchValue);
-    }, []),
-    500,
-    { maxWait: 4000 }
-  );
-
-  const inputRef = useRef();
-
-  // search input focus start
-
-  useKeyPressEvent((e) => {
-    if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
-      e.stopPropagation();
-      e.preventDefault();
-      // @ts-ignore
-      inputRef.current.focus();
-    }
-    return false;
-  });
-
-  useKeyPressEvent((e) => {
-    if (e.key === 'Escape') {
-      e.stopPropagation();
-      e.preventDefault();
-      // @ts-ignore
-      inputRef.current.blur();
-    }
-    return false;
-  });
-
-  // search input focus end
+  const router = useRouter();
 
   const { data, error } = useSWR(
     [
@@ -126,97 +74,29 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
     }
   );
 
-  if (!data) return <Spinner />;
-
   if (error) {
-    return toast.error('Nie udało się pobrać danych (SWR).');
+    return toast.error('Nie udało się pobrać danych z serwera.');
   }
 
   return (
     <PageLayout title='Home' description='Fake Sugar - sklep internetowy'>
       {!data ? <Spinner /> : null}
 
-      <Stack
-        justify='space-between'
-        w='100%'
-        direction={{ base: 'column', md: 'row' }}
-        align='center'
-      >
-        <Box>
-          <InputGroup>
-            <InputLeftElement pointerEvents='none'>
-              <Search2Icon color='gray.300' />
-            </InputLeftElement>
+      {/* TopBar Navigation Start*/}
+      <TopBarNavigation
+        sugarsConnection={data.sugarsConnection}
+        setSkip={setSkip}
+        skip={skip}
+        setSearchValue={setSearchValue}
+        categoryPath={router.pathname}
+      />
 
-            <Input
-              placeholder='Wyszukaj produkt (ctrl+k)'
-              type='text'
-              onChange={(event) => debounced(event.target.value)}
-              focusBorderColor='teal.300'
-              ref={inputRef}
-              onClick={() => setSkip(0)}
-              onFocus={() => setSkip(0)}
-            />
-          </InputGroup>
-        </Box>
+      {/* If there is no searchValue in database \/ */}
+      <DataNotFound sugarsConnection={data.sugarsConnection.edges} />
 
-        <HStack>
-          <NextLink href='/category/sugar' passHref>
-            <Tag
-              size='lg'
-              variant='outline'
-              colorScheme='teal'
-              cursor='pointer'
-              _hover={{ bg: 'teal.100' }}
-              transition='300ms'
-            >
-              <TagLabel>Cukier</TagLabel>
-              <TagRightIcon as={ArrowForwardIcon} />
-            </Tag>
-          </NextLink>
-          <NextLink href='/category/coal' passHref>
-            <Tag
-              size='lg'
-              variant='outline'
-              colorScheme='teal'
-              cursor='pointer'
-              _hover={{ bg: 'teal.100' }}
-              transition='300ms'
-            >
-              <TagLabel>Węgiel</TagLabel>
-              <TagRightIcon as={ArrowForwardIcon} />
-            </Tag>
-          </NextLink>
-        </HStack>
-        <Box>
-          {data.sugarsConnection.edges.length >= 0 && (
-            <Pagination
-              hasPreviousPage={data.sugarsConnection.pageInfo.hasPreviousPage}
-              hasNextPage={data.sugarsConnection.pageInfo.hasNextPage}
-              skip={skip}
-              setSkip={setSkip}
-            />
-          )}
-        </Box>
-      </Stack>
+      {/* TopBar Navigation End*/}
 
-      {data.sugarsConnection.edges.length === 0 && (
-        <MotionBox
-          mt={6}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.7, delay: 0.7 }}
-        >
-          <Alert status='info' rounded='lg'>
-            <AlertIcon />
-            <AlertTitle>Wyszukiwarka</AlertTitle>
-            <AlertDescription>
-              Szukany produkt nie istnieje w bazie danych
-            </AlertDescription>
-          </Alert>
-        </MotionBox>
-      )}
+      {/* Main content start */}
 
       <MotionGrid
         templateColumns={{
@@ -245,6 +125,10 @@ const IndexPage = ({ sugars }: SugarProductsData) => {
           ))}
         </AnimatePresence>
       </MotionGrid>
+
+      {/* Main content end */}
+
+      {/* Pagination menu on the bottom for mobile devices \/ */}
 
       {data.sugarsConnection.edges.length > 0 && (
         <Box display={{ base: 'block', md: 'none' }}>

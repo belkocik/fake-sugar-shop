@@ -1,21 +1,9 @@
-// export type SugarProductSchema = {
-//   title: string;
-//   subtitle: string;
-//   description: string;
-//   slug: string;
-//   brand: string;
-//   manufacturer: string;
-//   price: number;
-//   stock: number;
-//   discountValue: number;
-//   promotion: boolean;
-//   newProduct: boolean;
-//   onDiscount: boolean;
-//   coverImage: string;
-// };
+import { RichTextContent } from '@graphcms/rich-text-types';
 
 export type SugarProductSchema = {
   title: string;
+  subtitle?: string;
+  description?: { raw: RichTextContent };
   brand?: string;
   price?: number;
   coverImage?: { url: string };

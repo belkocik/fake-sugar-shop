@@ -2,23 +2,15 @@ import PageLayout from '@/components/page-layout';
 import {
   Grid,
   Box,
-  Input,
   GridProps,
-  InputGroup,
-  InputLeftElement,
   Spinner,
-  Stack,
-  Tag,
-  TagLabel,
-  TagLeftIcon,
-  HStack,
   Alert,
   AlertIcon,
   AlertTitle,
   AlertDescription,
   BoxProps,
 } from '@chakra-ui/react';
-import { useState, useRef, useCallback } from 'react';
+import { useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { request } from 'graphql-request';
 import useSWR from 'swr';
@@ -26,58 +18,26 @@ import toast from 'react-hot-toast';
 import { AnimatePresence, motion } from 'framer-motion';
 import ProductCard from '@/components/product-card';
 import Pagination from '@/components/pagination';
-import { Search2Icon, ArrowBackIcon } from '@chakra-ui/icons';
-import { useKeyPressEvent } from 'react-use';
-import NextLink from 'next/link';
+import { useRouter } from 'next/router';
+
 import { SugarProductSchema } from '@/types/sugar-product-schema';
-import { useDebouncedCallback } from 'use-debounce';
+
+import TopBarNavigation from '@/components/top-bar-navigation';
 
 const fetcher = (endpoint, query, variables?) =>
   request(endpoint, query, variables);
 const MotionGrid = motion<GridProps>(Grid);
 const MotionBox = motion<Omit<BoxProps, 'transition'>>(Box);
 
-interface SugarProductsData {
+interface ISugarProductsData {
   coalCategory: SugarProductSchema[];
 }
 
-const CoalCategory = ({ coalCategory }: SugarProductsData) => {
+const CoalCategory = ({ coalCategory }: ISugarProductsData) => {
   // console.log('sugar category data', sugarCategory);
   const [searchValue, setSearchValue] = useState('');
   const [skip, setSkip] = useState(0);
-  const inputRef = useRef();
-
-  const debounced = useDebouncedCallback(
-    useCallback((searchValue) => {
-      setSearchValue(searchValue);
-    }, []),
-    500,
-    { maxWait: 4000 }
-  );
-
-  // search input focus start
-
-  useKeyPressEvent((e) => {
-    if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
-      e.stopPropagation();
-      e.preventDefault();
-      // @ts-ignore
-      inputRef.current.focus();
-    }
-    return false;
-  });
-
-  useKeyPressEvent((e) => {
-    if (e.key === 'Escape') {
-      e.stopPropagation();
-      e.preventDefault();
-      // @ts-ignore
-      inputRef.current.blur();
-    }
-    return false;
-  });
-
-  // search input focus end
+  const router = useRouter();
 
   const { data, error } = useSWR(
     [
@@ -126,8 +86,6 @@ const CoalCategory = ({ coalCategory }: SugarProductsData) => {
     }
   );
 
-  if (!data) return <Spinner />;
-
   if (error) {
     return toast.error('Nie udało się pobrać danych (SWR).');
   }
@@ -138,58 +96,16 @@ const CoalCategory = ({ coalCategory }: SugarProductsData) => {
     >
       {!data ? <Spinner /> : null}
 
-      <Stack
-        justify='space-between'
-        w='100%'
-        direction={{ base: 'column', md: 'row' }}
-        align='center'
-      >
-        <Box>
-          <InputGroup>
-            <InputLeftElement pointerEvents='none'>
-              <Search2Icon color='gray.300' />
-            </InputLeftElement>
+      {/* TopBar Navigation Start*/}
+      <TopBarNavigation
+        sugarsConnection={data.sugarsConnection}
+        setSkip={setSkip}
+        skip={skip}
+        setSearchValue={setSearchValue}
+        categoryPath={router.pathname}
+      />
 
-            <Input
-              placeholder='Wyszukaj produkt (ctrl+k)'
-              type='text'
-              onChange={(event) => debounced(event.target.value)}
-              focusBorderColor='teal.300'
-              // disabled={skip === 0 ? false : true}
-              ref={inputRef}
-              onClick={() => setSkip(0)}
-              onFocus={() => setSkip(0)}
-            />
-          </InputGroup>
-        </Box>
-
-        <HStack>
-          <NextLink href='/' passHref>
-            <Tag
-              size='lg'
-              variant='outline'
-              colorScheme='gray'
-              cursor='pointer'
-              _hover={{ bg: 'gray.100' }}
-              transition='300ms'
-            >
-              <TagLeftIcon as={ArrowBackIcon} />
-              <TagLabel>Strona główna</TagLabel>
-            </Tag>
-          </NextLink>
-        </HStack>
-        <Box>
-          {data.sugarsConnection.edges.length >= 0 && (
-            <Pagination
-              hasPreviousPage={data.sugarsConnection.pageInfo.hasPreviousPage}
-              hasNextPage={data.sugarsConnection.pageInfo.hasNextPage}
-              skip={skip}
-              setSkip={setSkip}
-            />
-          )}
-        </Box>
-      </Stack>
-
+      {/* If there is no searchValue in database \/ */}
       {data.sugarsConnection.edges.length === 0 && (
         <MotionBox
           mt={6}
@@ -208,6 +124,9 @@ const CoalCategory = ({ coalCategory }: SugarProductsData) => {
         </MotionBox>
       )}
 
+      {/* TopBar Navigation End*/}
+
+      {/* Main content start */}
       <MotionGrid
         templateColumns={{
           base: 'repeat(1, 1fr)',
@@ -235,6 +154,9 @@ const CoalCategory = ({ coalCategory }: SugarProductsData) => {
           ))}
         </AnimatePresence>
       </MotionGrid>
+      {/* Main content end */}
+
+      {/* Pagination menu on the bottom for mobile devices \/ */}
       {data.sugarsConnection.edges.length > 0 && (
         <Box display={{ base: 'block', md: 'none' }}>
           <Pagination

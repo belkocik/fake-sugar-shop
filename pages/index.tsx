@@ -83,6 +83,8 @@ const IndexPage = ({ sugars }: ISugarProductsData) => {
     return toast.error('Nie udało się pobrać danych z serwera.');
   }
 
+  console.log('data', data);
+
   return (
     <PageLayout title='Home' description='Fake Sugar - sklep internetowy'>
       {!data ? <Spinner /> : null}

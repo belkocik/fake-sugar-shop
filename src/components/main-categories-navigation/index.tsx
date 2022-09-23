@@ -1,6 +1,7 @@
 import { Tag, TagLabel, TagRightIcon, TagLeftIcon } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { ArrowForwardIcon, ArrowBackIcon } from '@chakra-ui/icons';
+import React from 'react';
 
 const MainCategoriesNavigation = ({ categoryPath }) => {
   return (
@@ -67,4 +68,4 @@ const MainCategoriesNavigation = ({ categoryPath }) => {
   );
 };
 
-export default MainCategoriesNavigation;
+export default React.memo(MainCategoriesNavigation);

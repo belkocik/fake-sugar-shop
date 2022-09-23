@@ -147,7 +147,7 @@ const SugarCategory = ({ sugarCategory }: ISugarProductsData) => {
                 title={product.node.title}
                 brand={product.node.brand}
                 price={product.node.price}
-                coverImage={product.node.coverImage}
+                coverImage={product.node.coverImage.url}
                 id={product.node.id}
                 slug={product.node.slug}
                 stock={product.node.stock}

@@ -77,7 +77,7 @@ const CartComponent = ({ item }) => {
                   width='300px'
                   height='160px'
                   fit='cover'
-                  src={item.coverImage.url}
+                  src={item.coverImage}
                   alt={item.title}
                   draggable='false'
                   loading='lazy'

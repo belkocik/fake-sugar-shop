@@ -1,5 +1,5 @@
 <a href="https://drogi-cukier.vercel.app/" align="center">
-  <img src="https://marcin-niedbalec.vercel.app/_next/image?url=https%3A%2F%2Fmedia.graphassets.com%2Flh6E27YfT5SBZi196gTa&w=1920&q=75" width="100%">
+  <img src="https://marcin-niedbalec.vercel.app/_next/image?url=https%3A%2F%2Fmedia.graphassets.com%2FbvkKFksQJerBrRfDXbPK&w=1920&q=75" width="100%">
 </a>
 
 # drogi-cukier ecommerce app ⚛️

@@ -103,7 +103,7 @@ export const ProductCard = ({
             pos: 'absolute',
             top: 5,
             left: 0,
-            backgroundImage: `url(${coverImage.url})`,
+            backgroundImage: `url(${coverImage})`,
             filter: 'blur(15px)',
             zIndex: -1,
           }}
@@ -116,12 +116,12 @@ export const ProductCard = ({
           <Image
             width={282}
             height={230}
-            src={coverImage.url}
+            src={coverImage}
             alt={title}
             quality={50}
             rounded='lg'
             placeholder='blur'
-            blurDataURL={coverImage.url}
+            blurDataURL={coverImage}
             objectFit='fill'
           />
           {isOnDiscount && isNewProduct ? (

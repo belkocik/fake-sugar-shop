@@ -23,7 +23,7 @@ import NextLink from 'next/link';
 import NextImage from 'next/image';
 import { addToCart } from 'src/redux/slices/cartSlice';
 import useGetItemDetails from '@/utils/useGetItemDetails';
-import { SugarProductSchema } from '@/types/sugar-product-schema';
+import { SugarProductSchemaSlug } from '@/types/sugar-product-schema';
 
 const Image = chakra(NextImage, {
   shouldForwardProp: (prop) =>
@@ -52,7 +52,7 @@ const ProductSlugPage = ({ product }) => {
     isOnDiscount,
     isNewProduct,
     discountValue,
-  }: SugarProductSchema = product;
+  }: SugarProductSchemaSlug = product;
   const dispatch = useDispatch();
 
   const { discountPrice } = useGetItemDetails(price, discountValue);

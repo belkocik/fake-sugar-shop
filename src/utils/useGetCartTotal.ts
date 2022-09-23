@@ -1,16 +1,14 @@
 const useGetCartTotal = (selectProducts) => {
-  // ------------- calc total amount start ------------------------
   let shipping = 10;
-  const allItemsSubtotals = [];
 
-  selectProducts.length &&
-    selectProducts.map((item) => {
-      const subtotal = item.isOnDiscount
-        ? item.price * item.quantity -
-          item.price * item.quantity * (item.discountValue / 100)
-        : item.price * item.quantity;
-      allItemsSubtotals.push(subtotal);
-    });
+  const allItemsSubtotals = selectProducts.map((item) => {
+    const subtotal = item.isOnDiscount
+      ? item.price * item.quantity -
+        item.price * item.quantity * (item.discountValue / 100)
+      : item.price * item.quantity;
+
+    return subtotal;
+  });
 
   const initialAmount = 0;
   const allSubtotals = allItemsSubtotals.reduce(
@@ -21,8 +19,6 @@ const useGetCartTotal = (selectProducts) => {
   total > 0 ? (shipping = 10) : (shipping = 0);
 
   return { shipping, total };
-
-  // ------------- calc total amount end ------------------------
 };
 
 export default useGetCartTotal;

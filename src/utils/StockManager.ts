@@ -36,16 +36,15 @@ interface productsArray {
 }
 
 const StockManager = (cart) => {
-  //-------------------------------
   const checkProducts = async (theID: string, stockChange: number) => {
     console.log('stockChange is:', stockChange);
     const itemFromCart = await hygraphClient.request(GetProductById, {
       id: theID,
     });
-    //------------------------
-    const productsArray: productsArray[] = await Object.values(itemFromCart);
+
+    const productsArray: productsArray[] = Object.values(itemFromCart);
     console.log('productsArray in stock manager', productsArray);
-    //------------------------
+
     productsArray.map((item) => {
       if (item && item.id === theID) {
         const stock = item.stock - stockChange;
@@ -54,15 +53,12 @@ const StockManager = (cart) => {
           id: theID,
           stock: stock,
         });
-        console.log('updateStock is ', updateStock);
       }
     });
-
-    //------------------------
   };
 
   cart &&
-    cart.map((item, idx) => {
+    cart.map((item) => {
       const theID = item.id;
       const stockChange = item.quantity;
       checkProducts(theID, stockChange);

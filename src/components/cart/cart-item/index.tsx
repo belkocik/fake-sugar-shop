@@ -12,6 +12,7 @@ import {
   useNumberInput,
   Input,
   Tooltip,
+  CloseButton,
 } from '@chakra-ui/react';
 
 import { useDispatch } from 'react-redux';
@@ -22,7 +23,6 @@ import {
 } from 'src/redux/slices/cartSlice';
 
 import NextLink from 'next/link';
-import { CloseButton } from '@chakra-ui/react';
 
 import { insertDecimal } from '@/utils/insertDecimal';
 import useGetItemDetails from '@/utils/useGetItemDetails';

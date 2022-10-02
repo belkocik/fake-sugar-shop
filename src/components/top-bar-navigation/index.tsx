@@ -6,6 +6,8 @@ import {
   InputLeftElement,
   Input,
   HStack,
+  InputRightElement,
+  CloseButton,
 } from '@chakra-ui/react';
 import MainCategoriesNavigation from '../main-categories-navigation';
 import Pagination from '../pagination';
@@ -44,6 +46,12 @@ const TopBarNavigation = ({
 
   // search input focus end
 
+  const handleClick = () => {
+    debounced('');
+    // @ts-ignore
+    inputRef.current.value = '';
+  };
+
   return (
     <Stack
       justify='space-between'
@@ -56,9 +64,17 @@ const TopBarNavigation = ({
           <InputLeftElement pointerEvents='none'>
             <Search2Icon color='gray.300' />
           </InputLeftElement>
-
+          <InputRightElement width='3.5rem'>
+            <CloseButton
+              h='1.75rem'
+              w='2rem'
+              size='sm'
+              onClick={handleClick}
+              bg='gray.100'
+            />
+          </InputRightElement>
           <Input
-            placeholder='Wyszukaj produkt (ctrl+k)'
+            placeholder='Wyszukaj (ctrl+k)'
             type='text'
             onChange={(event) => debounced(event.target.value)}
             focusBorderColor='teal.300'

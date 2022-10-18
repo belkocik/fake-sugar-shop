@@ -9,8 +9,6 @@ import {
   Button,
   HStack,
   Badge,
-  useNumberInput,
-  Input,
   Tooltip,
   CloseButton,
 } from '@chakra-ui/react';
@@ -36,19 +34,6 @@ const CartComponent = ({ item }) => {
   const { discountPrice } = useGetItemDetails(price, discountValue);
   const discountFullPrice = insertDecimal(discountPrice * item.quantity);
   // calc price end
-
-  const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
-    useNumberInput({
-      step: 1,
-      defaultValue: item.quantity,
-      min: 1,
-      max: item.stock,
-      precision: 0,
-    });
-
-  const inc = getIncrementButtonProps();
-  const dec = getDecrementButtonProps();
-  const input = getInputProps();
 
   return (
     <Flex
@@ -111,20 +96,23 @@ const CartComponent = ({ item }) => {
       <Box>
         <Stack direction={{ base: 'column', md: 'row' }} align='center'>
           <HStack mr={{ base: 0, md: 4 }}>
-            <Button {...inc} onClick={() => dispatch(incrementQuantity(item))}>
+            <Button
+              rounded='xl'
+              size='sm'
+              onClick={() => dispatch(incrementQuantity(item))}
+              fontWeight={800}
+            >
               +
             </Button>
-            <Input
-              {...input}
-              w='80px'
-              textAlign='center'
-              color='black'
-              fontWeight={900}
-              disabled={true}
-            />
+            <Text fontWeight={500} width='20px' textAlign='center'>
+              {item.quantity}
+            </Text>
+
             <Button
-              {...dec}
+              rounded='xl'
+              size='sm'
               onClick={() => dispatch(decrementQuantity(item.id))}
+              fontWeight={800}
             >
               -
             </Button>
